@@ -15,6 +15,7 @@ vim.keymap.set("i", "<C-y>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
+vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
 vim.keymap.set("n", "<leader>rW", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]], { desc = "Replace word under cursor (case-insensitive)" })
 vim.keymap.set("n", "<leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor in current line" })
@@ -45,12 +46,6 @@ vim.keymap.set("", "<leader>l", function()
   hop.hint_lines_skip_whitespace()
 end, { remap = true })
 
--- -- Visual mode key mapping
--- vim.keymap.set('v', '<C-d>', '<Plug>(VM-Find-Under)', { noremap = true, silent = true })
---
--- -- Normal mode key mapping
--- vim.keymap.set('n', '<C-d>', '<Plug>(VM-Find-Under)', { noremap = true, silent = true })
-
 -- Select text with Shift + Arrow keys in Insert mode
 vim.api.nvim_set_keymap("i", "<S-Left>", "<C-O>v<Left>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<S-Right>", "<C-O>v<Right>", { noremap = true, silent = true })
@@ -75,9 +70,6 @@ vim.api.nvim_set_keymap("v", "<Tab>", ">gv", { noremap = true, silent = true })
 
 -- Outdent using Shift-Tab in visual mode
 vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
-
--- Quickly switch between current and previous opened tab
-vim.api.nvim_set_keymap("n", "<leader><leader>", "<C-^>", { noremap = true, silent = true })
 
 -- Keymaps for splits
 vim.api.nvim_set_keymap("n", "<leader>sv", ":vsplit<CR>", { noremap = true, silent = true })
@@ -107,3 +99,21 @@ vim.keymap.set("n", "<leader>tt", function()
     virtual_text = not vim.diagnostic.config().virtual_text,
   }
 end, { desc = "Toggle inline diagnostics" })
+
+-- new terminals
+vim.keymap.set("n", "<leader>ht", function()
+  require("nvchad.term").new { pos = "sp" }
+end, { desc = "terminal new horizontal term" })
+
+vim.keymap.set("n", "<leader>vt", function()
+  require("nvchad.term").new { pos = "vsp" }
+end, { desc = "terminal new vertical term" })
+
+-- toggleable
+vim.keymap.set({ "n", "t" }, "<C-n>", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "terminal toggleable vertical term" })
+
+vim.keymap.set({ "n", "t" }, "<C-f>", function()
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "terminal toggle floating term" })

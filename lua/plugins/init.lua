@@ -89,6 +89,74 @@ return {
       }
     end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "User FilePost",
+    opts = {
+      indent = { char = "│", highlight = "IblChar" },
+      scope = {
+        enabled = false, -- disable current context highlight
+        char = "│",
+        highlight = "IblScopeChar",
+      },
+    },
+
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "blankline")
+
+      local hooks = require "ibl.hooks"
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+      require("ibl").setup(opts)
+
+      dofile(vim.g.base46_cache .. "blankline")
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lua",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    config = function()
+      -- We call setup from our configs.cmp module after the plugin is loaded
+      require("configs.cmp").setup()
+    end,
+  },
+  -- {
+  --   "stevearc/oil.nvim",
+  --   opts = {},
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   config = function()
+  --     require("oil").setup({
+  --       default_file_explorer = true,
+  --       delete_to_trash = true,
+  --       skip_confirm_for_simple_edits = true,
+  --       view_options = {
+  --         show_hidden = true,
+  --         natural_order = true,
+  --         is_always_hidden = function(name, _)
+  --           return name == ".." or name == ".git"
+  --         end,
+  --       },
+  --       float = {
+  --         padding = 2,
+  --         max_width = 90,
+  --         max_height = 0,
+  --       },
+  --       win_options = {
+  --         wrap = true,
+  --         winblend = 0,
+  --       },
+  --       keymaps = {
+  --         ["<C-c>"] = false,
+  --         ["q"] = "actions.close",
+  --       },
+  --     })
+  --   end,
+  -- },
   -- { import = "nvchad.blink.lazyspec" },
 
   -- {
