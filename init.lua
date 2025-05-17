@@ -35,3 +35,21 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Highlight yanked text for a short time
+  vim.api.nvim_exec([[
+    augroup YankHighlight
+      autocmd!
+      autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="Search", timeout=200})
+    augroup end
+  ]], false)
+
+vim.opt.smartindent = true
+vim.o.wrap = false
+
+-- ~/.config/nvim/lua/custom/init.lua
+
+vim.diagnostic.disable()
+
+vim.api.nvim_set_hl(0, 'Cursor', { fg = '#000000', bg = '#44ffff' }) -- Black text, white background
+vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "NONE" })

@@ -1,4 +1,7 @@
-require("nvchad.configs.lspconfig").defaults()
+local lspconfig = require("lspconfig")
 
-local servers = { "html", "cssls" }
-vim.lsp.enable(servers)
+local servers = { "html", "cssls" , "clangd"}
+
+for _, server in ipairs(servers) do
+  lspconfig[server].setup({})
+end
