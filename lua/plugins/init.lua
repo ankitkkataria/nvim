@@ -125,40 +125,41 @@ return {
       require("configs.cmp").setup()
     end,
   },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {},
+  },
+  {
+    "chentoast/marks.nvim",
+    event = "BufReadPre",
+    config = true, -- uses default config
+  },
   -- {
-  --   "stevearc/oil.nvim",
-  --   opts = {},
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   "akinsho/toggleterm.nvim",
+  --   version = "*",
   --   config = function()
-  --     require("oil").setup({
-  --       default_file_explorer = true,
-  --       delete_to_trash = true,
-  --       skip_confirm_for_simple_edits = true,
-  --       view_options = {
-  --         show_hidden = true,
-  --         natural_order = true,
-  --         is_always_hidden = function(name, _)
-  --           return name == ".." or name == ".git"
-  --         end,
-  --       },
-  --       float = {
-  --         padding = 2,
-  --         max_width = 90,
-  --         max_height = 0,
-  --       },
-  --       win_options = {
-  --         wrap = true,
+  --     require("toggleterm").setup {
+  --       size = 50,
+  --       open_mapping = [[<c-n>]],
+  --       shade_filetypes = {},
+  --       shade_terminals = true,
+  --       shading_factor = 2,
+  --       start_in_insert = true,
+  --       persist_size = false,
+  --       direction = "vertical",
+  --       close_on_exit = true,
+  --       shell = vim.o.shell,
+  --       float_opts = {
+  --         border = "curved",
   --         winblend = 0,
+  --         highlights = {
+  --           border = "Normal",
+  --           background = "Normal",
+  --         },
   --       },
-  --       keymaps = {
-  --         ["<C-c>"] = false,
-  --         ["q"] = "actions.close",
-  --       },
-  --     })
-  --   end,
+  --     }
   -- },
-  -- { import = "nvchad.blink.lazyspec" },
-
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {

@@ -11,11 +11,13 @@ vim.keymap.set("n", "k", "gk")
 vim.keymap.set("i", "<Home>", "<ESC>I")
 vim.keymap.set("v", "J", "5gj")
 vim.keymap.set("v", "K", "5gk")
-vim.keymap.set("i", "<C-y>", "<C-w>")
+vim.keymap.set("i", "<C-u>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
-vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
+-- vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
+vim.keymap.set("n", "<leader>mf", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
 vim.keymap.set("n", "<leader>rW", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]], { desc = "Replace word under cursor (case-insensitive)" })
 vim.keymap.set("n", "<leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor in current line" })
@@ -117,3 +119,119 @@ end, { desc = "terminal toggleable vertical term" })
 vim.keymap.set({ "n", "t" }, "<C-f>", function()
   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
+
+vim.keymap.set("n", "<leader>n", function()
+  -- Use absolute path instead of relative path
+  local default_path = vim.fn.expand("%:p:h") .. "/"  -- :p gives the full path
+  
+  local path = vim.fn.input("New file: ", default_path, "file")
+  if path == "" then return end
+  
+  -- Check if the path ends with '/' indicating a directory
+  local is_directory = path:sub(-1) == "/"
+  
+  -- Handle both file and directory creation
+  if is_directory then
+    -- Create directory
+    local success = vim.fn.mkdir(path, "p")
+    if success == 1 then
+      vim.notify("Created directory: " .. path, vim.log.levels.INFO)
+    else
+      vim.notify("Failed to create directory: " .. path, vim.log.levels.ERROR)
+    end
+  else
+    -- Ensure parent directories exist
+    local dir = vim.fn.fnamemodify(path, ":h")
+    if dir ~= "" and dir ~= "." and vim.fn.isdirectory(dir) == 0 then
+      local success = vim.fn.mkdir(dir, "p")
+      if success ~= 1 then
+        vim.notify("Failed to create parent directory: " .. dir, vim.log.levels.ERROR)
+        return
+      end
+    end
+    
+    -- Create/save the file
+    local file = io.open(path, "a")
+    if file then
+      file:close()
+      -- Open the file in a new buffer and focus on it
+      vim.cmd("e " .. vim.fn.fnameescape(path))
+    else
+      vim.notify("Failed to create file: " .. path, vim.log.levels.ERROR)
+    end
+  end
+end, opts)
+
+-- Split line with X
+-- vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
+
+vim.keymap.set("n", "<leader>ss", function() require("persistence").load() end, 
+  { desc = "Restore session for current directory" })
+
+vim.keymap.set("n", "<leader>sa", function() require("persistence").select() end,
+  { desc = "Select and restore session" })
+
+vim.keymap.set("n", "<leader>sl", function() require("persistence").load({ last = true }) end,
+  { desc = "Restore last session" })
+
+vim.keymap.set("n", "<leader>sd", function() require("persistence").stop() end,
+  { desc = "Stop session saving" })
+
+-- Remove mark at current line
+vim.keymap.set("n", "<leader>rm", function()
+  local line = vim.fn.line(".")
+  -- Get all marks in the current buffer
+  local marks = vim.fn.getmarklist(vim.fn.bufnr())
+  
+  -- Filter to marks on the current line
+  for _, mark in ipairs(marks) do
+    if mark.pos[2] == line then
+      -- Delete the mark (mark.mark contains the mark name with a leading ')
+      local mark_name = string.sub(mark.mark, 2)
+      vim.cmd("delmarks " .. mark_name)
+    end
+  end
+  
+  -- Alsoacheck for global marks (A-Z, 0-9)
+  local global_marks = vim.fn.getmarklist()
+  for _, mark in ipairs(global_marks) do
+    if mark.pos[2] == line and mark.pos[1] == vim.fn.bufnr() then
+      local mark_name = string.sub(mark.mark, 2)
+      vim.cmd("delmarks " .. mark_name)
+    end
+  end
+  vim.notify("Removed marks on current line")
+end, { desc = "Remove all marks on current line" })
+
+
+-- Remove all marks in current buffer only
+vim.keymap.set("n", "<leader>ram", function()
+  vim.cmd("delmarks a-z") -- Only lowercase marks are buffer-local
+  vim.notify("Removed all buffer-local marks")
+end, { desc = "Remove all marks in current buffer" })
+
+-- Remove all marks (including global marks)
+vim.keymap.set("n", "<leader>ragm", function()
+  vim.cmd("delmarks a-z") -- Buffer-local marks
+  vim.cmd("delmarks A-Z") -- Global marks
+  vim.cmd("delmarks 0-9") -- Number marks
+  vim.notify("Removed all marks from everywhere")
+end, { desc = "Remove all marks from everywhere" })
+
+-- ToggleTerm
+-- vim.keymap.set({"n", "t"}, "<C-n>", function()
+--   pcall(require("toggleterm").toggle)
+-- end, { desc = "Toggle terminal", noremap = true, silent = true })
+--
+-- -- Terminal navigation
+-- for _, m in ipairs({
+--   {"<Esc>", "<C-\\><C-n>"},
+--   {"<C-h>", "<C-\\><C-n><C-w>h"},
+--   {"<C-j>", "<C-\\><C-n><C-w>j"},
+--   {"<C-k>", "<C-\\><C-n><C-w>k"},
+--   {"<C-l>", "<C-\\><C-n><C-w>l"}
+-- }) do
+--   vim.keymap.set("t", m[1], m[2], { noremap = true, silent = true })
+-- end
+
+
