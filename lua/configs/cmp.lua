@@ -18,7 +18,7 @@ M.setup = function()
         icon = " " .. icon .. " "
         item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
         item.kind = icon
-     else
+      else
         icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
         item.kind = string.format("%s %s", icon, cmp_ui.lspkind_text and item.kind or "")
       end
@@ -118,5 +118,81 @@ M.setup = function()
     options.window.completion.border = border "CmpBorder"
   end
   cmp.setup(vim.tbl_deep_extend("force", options, require "nvchad.cmp"))
+
+  -- -- `/` cmdline setup.
+  -- cmp.setup.cmdline("/", {
+  --   mapping = cmp.mapping.preset.cmdline(),
+  --   sources = {
+  --     { name = "buffer" },
+  --   },
+  -- })
+  --
+  -- -- `:` cmdline setup.
+  -- cmp.setup.cmdline(":", {
+  --   mapping = cmp.mapping.preset.cmdline(),
+  --   sources = cmp.config.sources({
+  --     { name = "path" },
+  --   }, {
+  --     {
+  --       name = "cmdline",
+  --       option = {
+  --         ignore_cmds = { "Man", "!" },
+  --       },
+  --     },
+  --   }),
+  -- })
+  -- Set up cmdline mappings without Tab functionality
+  local cmdline_mappings = cmp.mapping.preset.cmdline({
+    -- Override with explicit Up/Down/Enter mappings
+    ['<Up>'] = {
+      c = function()
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'n', true)
+        end
+      end,
+    },
+    ['<Down>'] = {
+      c = function()
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'n', true)
+        end
+      end,
+    },
+    ['<Tab>'] = {
+      c = function()
+        if cmp.visible() then
+          cmp.confirm({ select = true })
+        else
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'n', true)
+        end
+      end,
+    },
+  })
+
+     -- `/` cmdline setup.
+    cmp.setup.cmdline('/', {
+      mapping = cmdline_mappings,
+      sources = {
+        { name = 'buffer' }
+      }
+    })   
+
+    -- cmp.setup.cmdline(':', {
+    --   mapping = cmdline_mappings,
+    --   sources = cmp.config.sources({
+    --     { name = 'path' }
+    --   }, {
+    --     {
+    --       name = 'cmdline',
+    --       option = {
+    --         ignore_cmds = { 'Man', '!' }
+    --       }
+    --     }
+    --   })
+    -- })
 end
 return M

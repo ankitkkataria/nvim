@@ -15,9 +15,9 @@ vim.keymap.set("i", "<C-u>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
--- vim.keymap.set("n", "<leader><leader>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>mf", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 
+vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
 vim.keymap.set("n", "<leader>rW", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]], { desc = "Replace word under cursor (case-insensitive)" })
 vim.keymap.set("n", "<leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor in current line" })
