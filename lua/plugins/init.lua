@@ -12,6 +12,10 @@ return {
     end,
   },
   {
+    "nvim-tree/nvim-tree.lua",
+    enabled = false, -- This disables nvim-tree
+  },
+  {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {

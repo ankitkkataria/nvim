@@ -162,6 +162,62 @@ vim.keymap.set("n", "<leader>n", function()
   end
 end, opts)
 
+-- Map leader rn to rename current file
+vim.keymap.set("n", "<leader>rn", function()
+  -- Get current file path
+  local current_file = vim.fn.expand("%:p")
+  
+  -- Check if we're in a buffer with a file
+  if current_file == "" then
+    vim.notify("No file associated with current buffer", vim.log.levels.ERROR)
+    return
+  end
+  
+  -- Get directory of current file
+  local current_dir = vim.fn.expand("%:p:h") .. "/"
+  
+  -- Get current filename
+  local current_filename = vim.fn.expand("%:t")
+  
+  -- Prompt for new path with current file path as default
+  local new_path = vim.fn.input("Rename to: ", current_file, "file")
+  
+  -- If user cancels, return
+  if new_path == "" or new_path == current_file then
+    return
+  end
+  
+  -- Ensure parent directories exist for the new path
+  local new_dir = vim.fn.fnamemodify(new_path, ":h")
+  if new_dir ~= "" and new_dir ~= "." and vim.fn.isdirectory(new_dir) == 0 then
+    local dir_success = vim.fn.mkdir(new_dir, "p")
+    if dir_success ~= 1 then
+      vim.notify("Failed to create parent directory: " .. new_dir, vim.log.levels.ERROR)
+      return
+    end
+  end
+  
+  -- Save current buffer if it has changes
+  if vim.bo.modified then
+    vim.cmd("write")
+  end
+  
+  -- Rename the file
+  local rename_success = os.rename(current_file, new_path)
+  
+  if rename_success then
+    -- Close the current buffer
+    vim.cmd("bdelete " .. vim.fn.fnameescape(current_file))
+    
+    -- Open the new file
+    vim.cmd("edit " .. vim.fn.fnameescape(new_path))
+    
+    vim.notify("Renamed " .. current_filename .. " to " .. vim.fn.fnamemodify(new_path, ":t"), vim.log.levels.INFO)
+  else
+    vim.notify("Failed to rename file", vim.log.levels.ERROR)
+  end
+end, { desc = "Rename current file" })
+
 -- Split line with X
 -- vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
 
@@ -218,20 +274,40 @@ vim.keymap.set("n", "<leader>ragm", function()
   vim.notify("Removed all marks from everywhere")
 end, { desc = "Remove all marks from everywhere" })
 
--- ToggleTerm
--- vim.keymap.set({"n", "t"}, "<C-n>", function()
---   pcall(require("toggleterm").toggle)
--- end, { desc = "Toggle terminal", noremap = true, silent = true })
---
--- -- Terminal navigation
--- for _, m in ipairs({
---   {"<Esc>", "<C-\\><C-n>"},
---   {"<C-h>", "<C-\\><C-n><C-w>h"},
---   {"<C-j>", "<C-\\><C-n><C-w>j"},
---   {"<C-k>", "<C-\\><C-n><C-w>k"},
---   {"<C-l>", "<C-\\><C-n><C-w>l"}
--- }) do
---   vim.keymap.set("t", m[1], m[2], { noremap = true, silent = true })
--- end
+-- Define the toggle logic once
+local function toggle_mini_files()
+  if not package.loaded["mini.files"] then
+    require("mini.files").setup()
+  end
 
+  -- Check if mini.files is already open
+  local is_open = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local buf_ft = vim.api.nvim_buf_get_option(buf, "filetype")
+    if buf_ft == "minifiles" then
+      is_open = true
+      break
+    end
+  end
 
+  if is_open then
+    require("mini.files").close()
+    return
+  end
+
+  -- Open at current buffer's path
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.fnamemodify(bufname, ":p")
+  if path and vim.uv.fs_stat(path) then
+    require("mini.files").open(bufname, false)
+  else
+    vim.notify("current buffer file does not exist or path invalid", vim.log.levels.WARN)
+  end
+end
+
+-- Map multiple keys to the same function
+vim.keymap.set("n", "<C-\\>", toggle_mini_files, { desc = "Toggle mini.files at current buffer's file" })
+vim.keymap.set("n", "<leader>e", toggle_mini_files, { desc = "Toggle mini.files at current buffer's file" })
+
+vim.keymap.set("x", "<CR>", "l", { remap = true, desc = "In mini.files, treat <CR> like l in visual mode" })
