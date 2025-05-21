@@ -435,3 +435,18 @@ end
 
 vim.keymap.set("n", "<leader>x", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
 vim.keymap.set("n", "<leader>cc", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "v", "<BS>", "dgi", { noremap = true, silent = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt", 
+  callback = function() 
+    -- For Telescope: Select from cursor to beginning of input text, then press 'w'
+    vim.api.nvim_buf_set_keymap(0, "i", "<S-Home>", "<C-O>v^w", { noremap = true, silent = true })
+  end
+})
