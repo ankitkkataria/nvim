@@ -42,7 +42,7 @@ M.nvdash = {
     {
       txt = "  Sessions",
       keys = "sa",
-      cmd = ":lua require('persistence').select()<CR>",
+      cmd = ":lua require('persistence').select()",
     },
     -- { txt = "󱥚  Themes", keys = "th", cmd = ":lua require('nvchad.themes').open()" },
     -- { txt = "  Mappings", keys = "ch", cmd = "NvCheatsheet" },

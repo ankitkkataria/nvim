@@ -18,9 +18,24 @@ vim.keymap.set({ "n", "v" }, "mb", "%")
 vim.keymap.set("n", "<leader>mf", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
-vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor" })
-vim.keymap.set("n", "<leader>rW", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]], { desc = "Replace word under cursor (case-insensitive)" })
-vim.keymap.set("n", "<leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word under cursor in current line" })
+vim.keymap.set(
+  "n",
+  "<leader>rw",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>rW",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]],
+  { desc = "Replace word under cursor (case-insensitive)" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>rl",
+  [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor in current line" }
+)
 vim.keymap.set("n", "<leader>sw", [[:/\<<C-r><C-w>\><CR>]], { desc = "Search word under cursor (case-insensitive)" })
 
 -- Hover
@@ -122,14 +137,16 @@ end, { desc = "terminal toggle floating term" })
 
 vim.keymap.set("n", "<leader>n", function()
   -- Use absolute path instead of relative path
-  local default_path = vim.fn.expand("%:p:h") .. "/"  -- :p gives the full path
-  
+  local default_path = vim.fn.expand "%:p:h" .. "/" -- :p gives the full path
+
   local path = vim.fn.input("New file: ", default_path, "file")
-  if path == "" then return end
-  
+  if path == "" then
+    return
+  end
+
   -- Check if the path ends with '/' indicating a directory
   local is_directory = path:sub(-1) == "/"
-  
+
   -- Handle both file and directory creation
   if is_directory then
     -- Create directory
@@ -149,7 +166,7 @@ vim.keymap.set("n", "<leader>n", function()
         return
       end
     end
-    
+
     -- Create/save the file
     local file = io.open(path, "a")
     if file then
@@ -165,28 +182,28 @@ end, opts)
 -- Map leader rn to rename current file
 vim.keymap.set("n", "<leader>rn", function()
   -- Get current file path
-  local current_file = vim.fn.expand("%:p")
-  
+  local current_file = vim.fn.expand "%:p"
+
   -- Check if we're in a buffer with a file
   if current_file == "" then
     vim.notify("No file associated with current buffer", vim.log.levels.ERROR)
     return
   end
-  
+
   -- Get directory of current file
-  local current_dir = vim.fn.expand("%:p:h") .. "/"
-  
+  local current_dir = vim.fn.expand "%:p:h" .. "/"
+
   -- Get current filename
-  local current_filename = vim.fn.expand("%:t")
-  
+  local current_filename = vim.fn.expand "%:t"
+
   -- Prompt for new path with current file path as default
   local new_path = vim.fn.input("Rename to: ", current_file, "file")
-  
+
   -- If user cancels, return
   if new_path == "" or new_path == current_file then
     return
   end
-  
+
   -- Ensure parent directories exist for the new path
   local new_dir = vim.fn.fnamemodify(new_path, ":h")
   if new_dir ~= "" and new_dir ~= "." and vim.fn.isdirectory(new_dir) == 0 then
@@ -196,22 +213,22 @@ vim.keymap.set("n", "<leader>rn", function()
       return
     end
   end
-  
+
   -- Save current buffer if it has changes
   if vim.bo.modified then
-    vim.cmd("write")
+    vim.cmd "write"
   end
-  
+
   -- Rename the file
   local rename_success = os.rename(current_file, new_path)
-  
+
   if rename_success then
     -- Close the current buffer
     vim.cmd("bdelete " .. vim.fn.fnameescape(current_file))
-    
+
     -- Open the new file
     vim.cmd("edit " .. vim.fn.fnameescape(new_path))
-    
+
     vim.notify("Renamed " .. current_filename .. " to " .. vim.fn.fnamemodify(new_path, ":t"), vim.log.levels.INFO)
   else
     vim.notify("Failed to rename file", vim.log.levels.ERROR)
@@ -221,24 +238,29 @@ end, { desc = "Rename current file" })
 -- Split line with X
 -- vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
 
-vim.keymap.set("n", "<leader>ss", function() require("persistence").load() end, 
-  { desc = "Restore session for current directory" })
+-- Session related mappings
+vim.keymap.set("n", "<leader>ss", function()
+  require("persistence").load()
+end, { desc = "Restore session for current directory" })
 
-vim.keymap.set("n", "<leader>sa", function() require("persistence").select() end,
-  { desc = "Select and restore session" })
+vim.keymap.set("n", "<leader>sa", function()
+  require("persistence").select()
+end, { desc = "Select and restore session" })
 
-vim.keymap.set("n", "<leader>sl", function() require("persistence").load({ last = true }) end,
-  { desc = "Restore last session" })
+vim.keymap.set("n", "<leader>sl", function()
+  require("persistence").load { last = true }
+end, { desc = "Restore last session" })
 
-vim.keymap.set("n", "<leader>sd", function() require("persistence").stop() end,
-  { desc = "Stop session saving" })
+vim.keymap.set("n", "<leader>sd", function()
+  require("persistence").stop()
+end, { desc = "Stop session saving" })
 
--- Remove mark at current line
+-- Marks related mappings
 vim.keymap.set("n", "<leader>rm", function()
-  local line = vim.fn.line(".")
+  local line = vim.fn.line "."
   -- Get all marks in the current buffer
   local marks = vim.fn.getmarklist(vim.fn.bufnr())
-  
+
   -- Filter to marks on the current line
   for _, mark in ipairs(marks) do
     if mark.pos[2] == line then
@@ -247,7 +269,7 @@ vim.keymap.set("n", "<leader>rm", function()
       vim.cmd("delmarks " .. mark_name)
     end
   end
-  
+
   -- Alsoacheck for global marks (A-Z, 0-9)
   local global_marks = vim.fn.getmarklist()
   for _, mark in ipairs(global_marks) do
@@ -256,25 +278,25 @@ vim.keymap.set("n", "<leader>rm", function()
       vim.cmd("delmarks " .. mark_name)
     end
   end
-  vim.notify("Removed marks on current line")
+  vim.notify "Removed marks on current line"
 end, { desc = "Remove all marks on current line" })
-
 
 -- Remove all marks in current buffer only
 vim.keymap.set("n", "<leader>ram", function()
-  vim.cmd("delmarks a-z") -- Only lowercase marks are buffer-local
-  vim.notify("Removed all buffer-local marks")
+  vim.cmd "delmarks a-z" -- Only lowercase marks are buffer-local
+  vim.notify "Removed all buffer-local marks"
 end, { desc = "Remove all marks in current buffer" })
 
 -- Remove all marks (including global marks)
 vim.keymap.set("n", "<leader>ragm", function()
-  vim.cmd("delmarks a-z") -- Buffer-local marks
-  vim.cmd("delmarks A-Z") -- Global marks
-  vim.cmd("delmarks 0-9") -- Number marks
-  vim.notify("Removed all marks from everywhere")
+  vim.cmd "delmarks a-z" -- Buffer-local marks
+  vim.cmd "delmarks A-Z" -- Global marks
+  vim.cmd "delmarks 0-9" -- Number marks
+  vim.notify "Removed all marks from everywhere"
 end, { desc = "Remove all marks from everywhere" })
 
--- Define the toggle logic once
+
+-- Mini.files mappings 
 local function toggle_mini_files()
   if not package.loaded["mini.files"] then
     require("mini.files").setup()
@@ -306,8 +328,93 @@ local function toggle_mini_files()
   end
 end
 
--- Map multiple keys to the same function
 vim.keymap.set("n", "<C-\\>", toggle_mini_files, { desc = "Toggle mini.files at current buffer's file" })
 vim.keymap.set("n", "<leader>e", toggle_mini_files, { desc = "Toggle mini.files at current buffer's file" })
-
 vim.keymap.set("x", "<CR>", "l", { remap = true, desc = "In mini.files, treat <CR> like l in visual mode" })
+
+-- Buffer management mappings
+vim.keymap.set({ "n", "i" }, "<F7>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "buffer goto prev" })
+
+vim.keymap.set({ "n", "i" }, "<F8>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "buffer goto next" })
+
+vim.keymap.set("n", "<leader>cc", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
+
+local function close_buffers_left()
+  local current_buf = vim.api.nvim_get_current_buf()
+  
+  -- Keep track of buffers we've seen
+  local seen_current = false
+  local buffers_to_close = {}
+  
+  -- Get all valid, listed buffers
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
+      if buf == current_buf then
+        seen_current = true
+        break -- Stop once we've found the current buffer
+      else
+        table.insert(buffers_to_close, buf)
+      end
+    end
+  end
+  
+  -- Close all buffers that appeared before the current one
+  for _, buf in ipairs(buffers_to_close) do
+    require("nvchad.tabufline").close_buffer(buf)
+  end
+end
+
+-- Updated close_buffers_right function
+local function close_buffers_right()
+  local current_buf = vim.api.nvim_get_current_buf()
+  
+  -- Keep track of buffers we've seen
+  local seen_current = false
+  local buffers_to_close = {}
+  
+  -- Get all valid, listed buffers
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
+      if seen_current and buf ~= current_buf then
+        table.insert(buffers_to_close, buf)
+      elseif buf == current_buf then
+        seen_current = true
+      end
+    end
+  end
+  
+  -- Close all buffers that appeared after the current one
+  for _, buf in ipairs(buffers_to_close) do
+    require("nvchad.tabufline").close_buffer(buf)
+  end
+end
+
+-- The close_other_buffers function is working correctly, so keep it as is
+local function close_other_buffers()
+  local current_buf = vim.api.nvim_get_current_buf()
+  
+  -- Get list of buffers that NvChad considers valid
+  local listed_buffers = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
+      table.insert(listed_buffers, buf)
+    end
+  end
+  
+  -- Close all buffers except current using NvChad's close_buffer function
+  for _, buf_id in ipairs(listed_buffers) do
+    if buf_id ~= current_buf then
+      require("nvchad.tabufline").close_buffer(buf_id)
+    end
+  end
+end
+
+vim.keymap.set("n", "<leader>cl", close_buffers_left, { desc = "Close buffers to the left" })
+vim.keymap.set("n", "<leader>cr", close_buffers_right, { desc = "Close buffers to the right" })
+vim.keymap.set("n", "<leader>co", close_other_buffers, { desc = "Close other buffers" })

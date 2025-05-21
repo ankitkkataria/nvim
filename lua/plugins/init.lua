@@ -93,25 +93,83 @@ return {
       }
     end,
   },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = {
+  --     indent = { char = "│", highlight = "IblChar" },
+  --     scope = {
+  --       char = "│",
+  --       highlight = "IblScopeChar",
+  --     },
+  --   },
+  --
+  --   config = function(_, opts)
+  --     dofile(vim.g.base46_cache .. "blankline")
+  --
+  --     local hooks = require "ibl.hooks"
+  --     hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+  --     require("ibl").setup(opts)
+  --
+  --     dofile(vim.g.base46_cache .. "blankline")
+  --   end,
+  -- },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = {
+  --     indent = { char = "│", highlight = "IblChar" },
+  --     scope = {
+  --       char = "│",
+  --       highlight = "IblScopeChar",
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     dofile(vim.g.base46_cache .. "blankline")
+  --     local hooks = require "ibl.hooks"
+  --     hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+  --
+  --     -- Add this hook to customize just the line colors
+  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --       -- Make the indent lines more visible (bright blue in this example)
+  --       vim.api.nvim_set_hl(0, "IblChar", { fg = "#000000" })
+  --
+  --       -- Make scope lines stand out (bright green in this example)
+  --       vim.api.nvim_set_hl(0, "IblScopeChar", { fg = "#98C379" })
+  --     end)
+  --
+  --     require("ibl").setup(opts)
+  --     dofile(vim.g.base46_cache .. "blankline")
+  --   end,
+  -- },
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "User FilePost",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       indent = { char = "│", highlight = "IblChar" },
       scope = {
-        enabled = false, -- disable current context highlight
         char = "│",
         highlight = "IblScopeChar",
+        -- Add these lines to disable the scope's background highlighting
+        enabled = true,
+        show_start = false,
+        show_end = false,
       },
     },
-
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "blankline")
-
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+      -- Add this hook to customize just the line colors
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        -- Make the indent lines more visible (black in this example)
+        vim.api.nvim_set_hl(0, "IblChar", { fg = "#2F4F4F" })
+        -- Make scope lines stand out (green) without background highlight
+        vim.api.nvim_set_hl(0, "IblScopeChar", { fg = "#a6a2a2" })
+        -- Ensure no background for scope
+        vim.api.nvim_set_hl(0, "IblScope", { bg = "NONE" })
+      end)
       require("ibl").setup(opts)
-
       dofile(vim.g.base46_cache .. "blankline")
     end,
   },
