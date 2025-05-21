@@ -54,21 +54,33 @@ vim.diagnostic.disable()
 vim.api.nvim_set_hl(0, 'Cursor', { fg = '#000000', bg = '#44ffff' }) -- Black text, white background
 vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "NONE" })
 
--- Open a file, your cursor will be at the last position where you left it
 vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
   callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    local line = vim.fn.line "'\""
+    if
+      line > 1
+      and line <= vim.fn.line "$"
+      and vim.bo.filetype ~= "commit"
+      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+    then
+      vim.cmd 'normal! g`"zz'  -- Added 'zz' to center the cursor
     end
   end,
 })
-
 -- Disable automatic comment continuation
 vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "FileType"}, {
   pattern = "*",
   callback = function()
     vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufDelete", {
+  callback = function()
+    local bufs = vim.t.bufs
+    if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" then
+      vim.cmd "Nvdash"
+    end
   end,
 })
