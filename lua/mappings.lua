@@ -295,8 +295,7 @@ vim.keymap.set("n", "<leader>ragm", function()
   vim.notify "Removed all marks from everywhere"
 end, { desc = "Remove all marks from everywhere" })
 
-
--- Mini.files mappings 
+-- Mini.files mappings
 local function toggle_mini_files()
   if not package.loaded["mini.files"] then
     require("mini.files").setup()
@@ -347,11 +346,11 @@ end, { desc = "buffer close" })
 
 local function close_buffers_left()
   local current_buf = vim.api.nvim_get_current_buf()
-  
+
   -- Keep track of buffers we've seen
   local seen_current = false
   local buffers_to_close = {}
-  
+
   -- Get all valid, listed buffers
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
@@ -363,7 +362,7 @@ local function close_buffers_left()
       end
     end
   end
-  
+
   -- Close all buffers that appeared before the current one
   for _, buf in ipairs(buffers_to_close) do
     require("nvchad.tabufline").close_buffer(buf)
@@ -373,11 +372,11 @@ end
 -- Updated close_buffers_right function
 local function close_buffers_right()
   local current_buf = vim.api.nvim_get_current_buf()
-  
+
   -- Keep track of buffers we've seen
   local seen_current = false
   local buffers_to_close = {}
-  
+
   -- Get all valid, listed buffers
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
@@ -388,7 +387,7 @@ local function close_buffers_right()
       end
     end
   end
-  
+
   -- Close all buffers that appeared after the current one
   for _, buf in ipairs(buffers_to_close) do
     require("nvchad.tabufline").close_buffer(buf)
@@ -398,7 +397,7 @@ end
 -- The close_other_buffers function is working correctly, so keep it as is
 local function close_other_buffers()
   local current_buf = vim.api.nvim_get_current_buf()
-  
+
   -- Get list of buffers that NvChad considers valid
   local listed_buffers = {}
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -406,7 +405,7 @@ local function close_other_buffers()
       table.insert(listed_buffers, buf)
     end
   end
-  
+
   -- Close all buffers except current using NvChad's close_buffer function
   for _, buf_id in ipairs(listed_buffers) do
     if buf_id ~= current_buf then
@@ -418,3 +417,21 @@ end
 vim.keymap.set("n", "<leader>cl", close_buffers_left, { desc = "Close buffers to the left" })
 vim.keymap.set("n", "<leader>cr", close_buffers_right, { desc = "Close buffers to the right" })
 vim.keymap.set("n", "<leader>co", close_other_buffers, { desc = "Close other buffers" })
+
+-- Override <leader>x to close Telescope when in a Telescope prompt
+local function close_telescope_or_buffer()
+  -- Check if current buffer is a Telescope prompt
+  local current_buf = vim.api.nvim_get_current_buf()
+  local buf_type = vim.api.nvim_buf_get_option(current_buf, "filetype")
+
+  if buf_type == "TelescopePrompt" then
+    -- If in Telescope, close Telescope
+    require("telescope.actions").close(vim.api.nvim_get_current_buf())
+  else
+    -- If not in Telescope, use the regular close buffer function
+    require("nvchad.tabufline").close_buffer()
+  end
+end
+
+vim.keymap.set("n", "<leader>x", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
+vim.keymap.set("n", "<leader>cc", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
