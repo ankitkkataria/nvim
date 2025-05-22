@@ -11,7 +11,7 @@ vim.keymap.set("n", "k", "gk")
 vim.keymap.set("i", "<Home>", "<ESC>I")
 vim.keymap.set("v", "J", "5gj")
 vim.keymap.set("v", "K", "5gk")
-vim.keymap.set("i", "<C-u>", "<C-w>")
+vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
@@ -90,8 +90,14 @@ vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", { noremap = true, silent = true }
 
 -- Keymaps for splits
 vim.api.nvim_set_keymap("n", "<leader>sv", ":vsplit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>sh", ":split<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>sc", ":close<CR>", { noremap = true, silent = true })
 
+-- Movement between splits
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 -- For joining two lines
 vim.api.nvim_set_keymap("n", "<leader>j", "J", { noremap = true, silent = true })
 
