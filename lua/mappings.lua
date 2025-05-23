@@ -48,6 +48,7 @@ vim.keymap.set({ "n", "v" }, "P", [["+P]])
 vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
+vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
 
 -- EasyMotion Settings
 local hop = require "hop"
@@ -118,6 +119,7 @@ vim.keymap.set("n", "<leader>tt", function()
   }
 end, { desc = "Toggle inline diagnostics" })
 
+vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>", opts)
 -- new terminals
 -- vim.keymap.set("n", "<leader>ht", function()
 --   require("nvchad.term").new { pos = "sp" }
@@ -341,101 +343,40 @@ vim.keymap.set({ "n", "i" }, "<F8>", function()
   require("nvchad.tabufline").next()
 end, { desc = "buffer goto next" })
 
+vim.keymap.set("n", "<leader>x", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
+
 vim.keymap.set("n", "<leader>cc", function()
   require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
-local function close_buffers_left()
-  local current_buf = vim.api.nvim_get_current_buf()
+vim.keymap.set("n", "<leader>co", function()
+ require("nvchad.tabufline").closeAllBufs(false) -- excludes current buf
+end, { desc = "buffer close" })
 
-  -- Keep track of buffers we've seen
-  local seen_current = false
-  local buffers_to_close = {}
+vim.keymap.set("n", "<leader>ca", function()
+ require("nvchad.tabufline").closeAllBufs(true) -- includes current buf
+end, { desc = "buffer close" })
 
-  -- Get all valid, listed buffers
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
-      if buf == current_buf then
-        seen_current = true
-        break -- Stop once we've found the current buffer
-      else
-        table.insert(buffers_to_close, buf)
-      end
-    end
-  end
+vim.keymap.set("n", "<leader>cl", function()
+ require("nvchad.tabufline").closeBufs_at_direction("left") -- or right
+end, { desc = "buffer close" })
 
-  -- Close all buffers that appeared before the current one
-  for _, buf in ipairs(buffers_to_close) do
-    require("nvchad.tabufline").close_buffer(buf)
-  end
-end
+vim.keymap.set("n", "<leader>cr", function()
+ require("nvchad.tabufline").closeBufs_at_direction("right") -- or right
+end, { desc = "buffer close" })
 
--- Updated close_buffers_right function
-local function close_buffers_right()
-  local current_buf = vim.api.nvim_get_current_buf()
-
-  -- Keep track of buffers we've seen
-  local seen_current = false
-  local buffers_to_close = {}
-
-  -- Get all valid, listed buffers
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
-      if seen_current and buf ~= current_buf then
-        table.insert(buffers_to_close, buf)
-      elseif buf == current_buf then
-        seen_current = true
-      end
-    end
-  end
-
-  -- Close all buffers that appeared after the current one
-  for _, buf in ipairs(buffers_to_close) do
-    require("nvchad.tabufline").close_buffer(buf)
-  end
-end
-
--- The close_other_buffers function is working correctly, so keep it as is
-local function close_other_buffers()
-  local current_buf = vim.api.nvim_get_current_buf()
-
-  -- Get list of buffers that NvChad considers valid
-  local listed_buffers = {}
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_get_option(buf, "buflisted") and vim.api.nvim_buf_is_valid(buf) then
-      table.insert(listed_buffers, buf)
-    end
-  end
-
-  -- Close all buffers except current using NvChad's close_buffer function
-  for _, buf_id in ipairs(listed_buffers) do
-    if buf_id ~= current_buf then
-      require("nvchad.tabufline").close_buffer(buf_id)
-    end
-  end
-end
-
-vim.keymap.set("n", "<leader>cl", close_buffers_left, { desc = "Close buffers to the left" })
-vim.keymap.set("n", "<leader>cr", close_buffers_right, { desc = "Close buffers to the right" })
-vim.keymap.set("n", "<leader>co", close_other_buffers, { desc = "Close other buffers" })
-
--- Override <leader>x to close Telescope when in a Telescope prompt
-local function close_telescope_or_buffer()
-  -- Check if current buffer is a Telescope prompt
-  local current_buf = vim.api.nvim_get_current_buf()
-  local buf_type = vim.api.nvim_buf_get_option(current_buf, "filetype")
-
-  if buf_type == "TelescopePrompt" then
-    -- If in Telescope, close Telescope
-    require("telescope.actions").close(vim.api.nvim_get_current_buf())
-  else
-    -- If not in Telescope, use the regular close buffer function
-    require("nvchad.tabufline").close_buffer()
-  end
-end
-
-vim.keymap.set("n", "<leader>x", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
-vim.keymap.set("n", "<leader>cc", close_telescope_or_buffer, { desc = "Close buffer or Telescope" })
+-- Telescope
+vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
+vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
+vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
+vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
+vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
+vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
+vim.keymap.set("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+vim.keymap.set("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "TelescopePrompt",
@@ -445,9 +386,22 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "TelescopePrompt", 
-  callback = function() 
-    -- For Telescope: Select from cursor to beginning of input text, then press 'w'
+  pattern = "TelescopePrompt",
+  callback = function()
     vim.api.nvim_buf_set_keymap(0, "i", "<S-Home>", "<C-O>v^w", { noremap = true, silent = true })
-  end
+  end,
+})
+
+-- Function to close telescope
+local function close_telescope()
+  vim.cmd("close!")
+end
+
+-- Set up telescope close keymaps
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function()
+    vim.keymap.set("n", "<leader>x", close_telescope, { buffer = true, desc = "close telescope" })
+    vim.keymap.set("n", "<leader>cc", close_telescope, { buffer = true, desc = "close telescope" })
+  end,
 })

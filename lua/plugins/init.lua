@@ -93,55 +93,6 @@ return {
       }
     end,
   },
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   opts = {
-  --     indent = { char = "│", highlight = "IblChar" },
-  --     scope = {
-  --       char = "│",
-  --       highlight = "IblScopeChar",
-  --     },
-  --   },
-  --
-  --   config = function(_, opts)
-  --     dofile(vim.g.base46_cache .. "blankline")
-  --
-  --     local hooks = require "ibl.hooks"
-  --     hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-  --     require("ibl").setup(opts)
-  --
-  --     dofile(vim.g.base46_cache .. "blankline")
-  --   end,
-  -- },
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   event = { "BufReadPost", "BufNewFile" },
-  --   opts = {
-  --     indent = { char = "│", highlight = "IblChar" },
-  --     scope = {
-  --       char = "│",
-  --       highlight = "IblScopeChar",
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     dofile(vim.g.base46_cache .. "blankline")
-  --     local hooks = require "ibl.hooks"
-  --     hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-  --
-  --     -- Add this hook to customize just the line colors
-  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-  --       -- Make the indent lines more visible (bright blue in this example)
-  --       vim.api.nvim_set_hl(0, "IblChar", { fg = "#000000" })
-  --
-  --       -- Make scope lines stand out (bright green in this example)
-  --       vim.api.nvim_set_hl(0, "IblScopeChar", { fg = "#98C379" })
-  --     end)
-  --
-  --     require("ibl").setup(opts)
-  --     dofile(vim.g.base46_cache .. "blankline")
-  --   end,
-  -- },
   {
     "lukas-reineke/indent-blankline.nvim",
     event = { "BufReadPost", "BufNewFile" },
@@ -236,4 +187,16 @@ return {
       require("telescope").load_extension "fzf"
     end,
   },
+  {
+    -- detect tabstop and shiftwidth automatically
+    "tpope/vim-sleuth",
+  },
+  -- {
+  --   -- Powerful Git integration for Vim
+  --   "tpope/vim-fugitive",
+  -- },
+  -- {
+  --   -- GitHub integration for vim-fugitive
+  --   "tpope/vim-rhubarb",
+  -- },
 }
