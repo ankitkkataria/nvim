@@ -38,9 +38,6 @@ vim.keymap.set(
 )
 vim.keymap.set("n", "<leader>sw", [[:/\<<C-r><C-w>\><CR>]], { desc = "Search word under cursor (case-insensitive)" })
 
--- Hover
-vim.api.nvim_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
-
 -- Move the Lines in visual mode
 vim.api.nvim_set_keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
