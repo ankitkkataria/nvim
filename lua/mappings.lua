@@ -121,13 +121,13 @@ vim.keymap.set("n", "<leader>tt", function()
 end, { desc = "Toggle inline diagnostics" })
 
 -- new terminals
-vim.keymap.set("n", "<leader>ht", function()
-  require("nvchad.term").new { pos = "sp" }
-end, { desc = "terminal new horizontal term" })
-
-vim.keymap.set("n", "<leader>vt", function()
-  require("nvchad.term").new { pos = "vsp" }
-end, { desc = "terminal new vertical term" })
+-- vim.keymap.set("n", "<leader>ht", function()
+--   require("nvchad.term").new { pos = "sp" }
+-- end, { desc = "terminal new horizontal term" })
+--
+-- vim.keymap.set("n", "<leader>vt", function()
+--   require("nvchad.term").new { pos = "vsp" }
+-- end, { desc = "terminal new vertical term" })
 
 -- toggleable
 vim.keymap.set({ "n", "t" }, "<C-n>", function()
