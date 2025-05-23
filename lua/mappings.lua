@@ -15,8 +15,6 @@ vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
-vim.keymap.set("n", "<leader>mf", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
-
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
 vim.keymap.set(
   "n",

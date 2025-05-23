@@ -1,6 +1,7 @@
 local M = {}
 M.setup = function()
   local cmp = require "cmp"
+  local builtin = require("telescope.builtin")
   dofile(vim.g.base46_cache .. "cmp")
   local cmp_ui = require("nvconfig").ui.cmp
   local cmp_style = cmp_ui.style
@@ -208,6 +209,8 @@ M.setup = function()
       vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, vim.tbl_deep_extend("force", opts, { desc = "LSP References" }))
       vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Rename" }))
       vim.keymap.set("i", "<C-j>", function() vim.lsp.buf.signature_help() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
+      vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
+      vim.keymap.set("n", "<leader>ts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
     end
   })
     -- cmp.setup.cmdline(':', {
