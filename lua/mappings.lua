@@ -405,3 +405,17 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<leader>cc", close_telescope, { buffer = true, desc = "close telescope" })
   end,
 })
+
+-- Copy current file path to clipboard 
+vim.keymap.set("n", "<leader>yp", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied path: " .. path, vim.log.levels.INFO)
+end, { desc = "Copy file path to clipboard" })
+
+-- Copy current file's name 
+vim.keymap.set("n", "<leader>yn", function()
+  local name = vim.fn.expand("%:t")
+  vim.fn.setreg("+", name)
+  vim.notify("Copied filename: " .. name, vim.log.levels.INFO)
+end, { desc = "Copy filename to clipboard" })
