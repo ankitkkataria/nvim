@@ -15,6 +15,19 @@ vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
+-- By default, CTRL-U and CTRL-D scroll by half a screen (50% of the window height)
+-- Scroll by 35% of the window height and keep the cursor centered
+local scroll_percentage = 0.25
+-- Scroll by a percentage of the window height and keep the cursor centered
+vim.keymap.set("n", "<C-d>", function()
+  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
+  vim.cmd("normal! " .. lines .. "jzz")
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", function()
+  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
+  vim.cmd("normal! " .. lines .. "kzz")
+end, { noremap = true, silent = true })
+
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
 vim.keymap.set(
   "n",
@@ -95,7 +108,7 @@ vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 -- For joining two lines
-vim.api.nvim_set_keymap("n", "<leader>j", "J", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>j", "mzJ`z", { noremap = true, silent = true })
 
 -- nvimtree
 -- vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
@@ -419,3 +432,18 @@ vim.keymap.set("n", "<leader>yn", function()
   vim.fn.setreg("+", name)
   vim.notify("Copied filename: " .. name, vim.log.levels.INFO)
 end, { desc = "Copy filename to clipboard" })
+
+vim.keymap.set("n", "<leader>mx", function()
+  local file = vim.fn.expand("%")
+  local perms = vim.fn.getfperm(file)
+  local is_executable = string.match(perms, "x", -1) ~= nil
+  local escaped_file = vim.fn.shellescape(file)
+  if is_executable then
+    vim.cmd("silent !chmod -x " .. escaped_file)
+    vim.notify("Removed executable permission", vim.log.levels.INFO)
+  else
+    vim.cmd("silent !chmod +x " .. escaped_file)
+    vim.notify("Added executable permission", vim.log.levels.INFO)
+  end
+end, { desc = "Toggle executable permission" })
+

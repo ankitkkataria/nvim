@@ -192,7 +192,7 @@ return {
     "tpope/vim-sleuth",
   },
   -- {
-  --   -- Powerful Git integration for Vim
+  --  Powerful Git integration for Vim
   --   "tpope/vim-fugitive",
   -- },
   -- {

@@ -49,8 +49,9 @@ return {
       mappings = {
         show_help = "?",
         go_in_plus = "<cr>",
-        go_out_plus = "<tab>",
-        synchronize = "<leader><leader>",
+        go_out = "<tab>",
+        go_out_plus = "h",
+        synchronize = "s",
       },
       content = {
         filter = function(entry)
