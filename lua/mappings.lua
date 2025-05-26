@@ -133,14 +133,6 @@ vim.keymap.set("n", "<leader>tt", function()
 end, { desc = "Toggle inline diagnostics" })
 
 vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>", opts)
--- new terminals
--- vim.keymap.set("n", "<leader>ht", function()
---   require("nvchad.term").new { pos = "sp" }
--- end, { desc = "terminal new horizontal term" })
---
--- vim.keymap.set("n", "<leader>vt", function()
---   require("nvchad.term").new { pos = "vsp" }
--- end, { desc = "terminal new vertical term" })
 
 -- toggleable
 vim.keymap.set({ "n", "t" }, "<C-n>", function()
@@ -365,19 +357,19 @@ vim.keymap.set("n", "<leader>cc", function()
 end, { desc = "buffer close" })
 
 vim.keymap.set("n", "<leader>co", function()
- require("nvchad.tabufline").closeAllBufs(false) -- excludes current buf
+  require("nvchad.tabufline").closeAllBufs(false) -- excludes current buf
 end, { desc = "buffer close" })
 
 vim.keymap.set("n", "<leader>ca", function()
- require("nvchad.tabufline").closeAllBufs(true) -- includes current buf
+  require("nvchad.tabufline").closeAllBufs(true) -- includes current buf
 end, { desc = "buffer close" })
 
 vim.keymap.set("n", "<leader>cl", function()
- require("nvchad.tabufline").closeBufs_at_direction("left") -- or right
+  require("nvchad.tabufline").closeBufs_at_direction "left" -- or right
 end, { desc = "buffer close" })
 
 vim.keymap.set("n", "<leader>cr", function()
- require("nvchad.tabufline").closeBufs_at_direction("right") -- or right
+  require("nvchad.tabufline").closeBufs_at_direction "right" -- or right
 end, { desc = "buffer close" })
 
 -- Telescope
@@ -386,10 +378,39 @@ vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telesc
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
 vim.keymap.set("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
 vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
-vim.keymap.set("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
+vim.keymap.set(
+  "n",
+  "<leader>fz",
+  "<cmd>Telescope current_buffer_fuzzy_find<CR>",
+  { desc = "telescope find in current buffer" }
+)
+
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 vim.keymap.set("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+
+local function toggle_telescope()
+  if vim.bo.filetype == 'TelescopePrompt' then
+    require('telescope.actions').close(vim.api.nvim_get_current_buf())
+  else
+    require('telescope.builtin').find_files({
+      attach_mappings = function(prompt_bufnr, map)
+        map('i', '<C-p>', function()
+          require('telescope.actions').close(prompt_bufnr)
+        end)
+        map('n', '<C-p>', function()
+          require('telescope.actions').close(prompt_bufnr)
+        end)
+        return true
+      end
+    })
+  end
+end
+
+vim.keymap.set("n", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
+vim.keymap.set("i", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "TelescopePrompt",
@@ -407,7 +428,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Function to close telescope
 local function close_telescope()
-  vim.cmd("close!")
+  vim.cmd "close!"
 end
 
 -- Set up telescope close keymaps
@@ -419,22 +440,22 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Copy current file path to clipboard 
+-- Copy current file path to clipboard
 vim.keymap.set("n", "<leader>yp", function()
-  local path = vim.fn.expand("%:p")
+  local path = vim.fn.expand "%:p"
   vim.fn.setreg("+", path)
   vim.notify("Copied path: " .. path, vim.log.levels.INFO)
 end, { desc = "Copy file path to clipboard" })
 
--- Copy current file's name 
+-- Copy current file's name
 vim.keymap.set("n", "<leader>yn", function()
-  local name = vim.fn.expand("%:t")
+  local name = vim.fn.expand "%:t"
   vim.fn.setreg("+", name)
   vim.notify("Copied filename: " .. name, vim.log.levels.INFO)
 end, { desc = "Copy filename to clipboard" })
 
 vim.keymap.set("n", "<leader>mx", function()
-  local file = vim.fn.expand("%")
+  local file = vim.fn.expand "%"
   local perms = vim.fn.getfperm(file)
   local is_executable = string.match(perms, "x", -1) ~= nil
   local escaped_file = vim.fn.shellescape(file)
@@ -446,4 +467,3 @@ vim.keymap.set("n", "<leader>mx", function()
     vim.notify("Added executable permission", vim.log.levels.INFO)
   end
 end, { desc = "Toggle executable permission" })
-
