@@ -30,10 +30,11 @@ vim.keymap.set("x", "P", [["_dP]])
 vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
 
 -- EasyMotion Settings
-local hop = require "hop"
-vim.keymap.set("", "s", function()
-  hop.hint_char1()
-end, { remap = true })
+-- local hop = require "hop"
+-- vim.keymap.set("", "s", function()
+--   hop.hint_char2()
+-- end, { remap = true })
+
 vim.keymap.set("", "<leader>l", function()
   hop.hint_lines_skip_whitespace()
 end, { remap = true })

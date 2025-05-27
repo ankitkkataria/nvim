@@ -36,6 +36,24 @@ vim.schedule(function()
   require "mappings"
 end)
 
+-- Define custom yank highlight group
+vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#FFD1DC", bold = true })
+
+-- Change search highlight color
+vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#FFD1DC", bold = true })
+
+-- Change search highlight color when the cursor is on the selection 
+vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#FF6F61", bold = true })
+
+-- Highlight yanked text using custom group
+vim.api.nvim_exec([[
+  augroup YankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="YankHighlight", timeout=200})
+  augroup end
+]], false)
+
+
 -- Highlight yanked text for a short time
   vim.api.nvim_exec([[
     augroup YankHighlight
@@ -47,11 +65,9 @@ end)
 vim.opt.smartindent = true
 vim.o.wrap = false
 
--- ~/.config/nvim/lua/custom/init.lua
-
 vim.diagnostic.disable()
 
-vim.api.nvim_set_hl(0, 'Cursor', { fg = '#000000', bg = '#44ffff' }) -- Black text, white background
+
 vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "NONE" })
 
 vim.api.nvim_create_autocmd("BufReadPost", {
@@ -85,3 +101,20 @@ vim.api.nvim_create_autocmd("BufDelete", {
     end
   end,
 })
+
+vim.api.nvim_set_hl(0, "FlashMatch", { fg = "#ffffff", bg = "NONE", bold = false })
+vim.api.nvim_set_hl(0, "FlashCurrent", { fg = "#ffffff", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true }) 
+
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333344" })
+
+-- Just some colors
+-- vim.api.nvim_set_hl(0, "MyPastelPink", { fg = "#FFD1DC", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelBlue", { fg = "#AEC6CF", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelGreen", { fg = "#77DD77", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelPurple", { fg = "#CBAACB", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelYellow", { fg = "#FFF5BA", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelOrange", { fg = "#FFB347", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelTeal", { fg = "#99E1D9", bg = "NONE", bold = false })
+-- vim.api.nvim_set_hl(0, "MyPastelCoral", { fg = "#FF6F61", bg = "NONE", bold = false })
+
