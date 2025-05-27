@@ -353,7 +353,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
-vim.keymap.set("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
+vim.keymap.set("n", "<leader>gl", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 vim.keymap.set("n", "<leader>wk", "<cmd>Telescope keymaps<CR>", { desc = "Find Keymaps" })
