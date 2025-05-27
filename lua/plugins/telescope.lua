@@ -23,6 +23,28 @@ return {
         case_mode = "smart_case",
       }
 
+      -- Add the multi-select function
+      local select_one_or_multi = function(prompt_bufnr)
+        local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+        local multi = picker:get_multi_selection()
+        if not vim.tbl_isempty(multi) then
+          require("telescope.actions").close(prompt_bufnr)
+          for _, j in pairs(multi) do
+            if j.path ~= nil then
+              vim.cmd(string.format("%s %s", "edit", j.path))
+            end
+          end
+        else
+          require("telescope.actions").select_default(prompt_bufnr)
+        end
+      end
+
+      -- Override the default Enter behavior
+      telescope_config.defaults = telescope_config.defaults or {}
+      telescope_config.defaults.mappings = telescope_config.defaults.mappings or {}
+      telescope_config.defaults.mappings.i = telescope_config.defaults.mappings.i or {}
+      telescope_config.defaults.mappings.i["<CR>"] = select_one_or_multi
+
       return telescope_config
     end,
     config = function(_, opts)
