@@ -99,6 +99,6 @@ return {
     }
     -- Load the extension after setup
     require("telescope").load_extension "neoclip"
-    vim.keymap.set("n", "<leader>cp", "<cmd>Telescope neoclip<CR>", { desc = "Telescope Neoclip" })
+    vim.keymap.set("n", "<leader>cb", "<cmd>Telescope neoclip<CR>", { desc = "Telescope Neoclip" })
   end,
 }
