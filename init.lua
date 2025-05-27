@@ -68,6 +68,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
+
 -- Disable automatic comment continuation
 vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "FileType"}, {
   pattern = "*",

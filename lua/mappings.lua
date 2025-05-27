@@ -15,40 +15,6 @@ vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
--- By default, CTRL-U and CTRL-D scroll by half a screen (50% of the window height)
--- Scroll by 35% of the window height and keep the cursor centered
-local scroll_percentage = 0.25
--- Scroll by a percentage of the window height and keep the cursor centered
-vim.keymap.set("n", "<C-d>", function()
-  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
-  vim.cmd("normal! " .. lines .. "jzz")
-end, { noremap = true, silent = true })
-vim.keymap.set("n", "<C-u>", function()
-  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
-  vim.cmd("normal! " .. lines .. "kzz")
-end, { noremap = true, silent = true })
-
-vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
-vim.keymap.set(
-  "n",
-  "<leader>rw",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "Replace word under cursor" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>rW",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]],
-  { desc = "Replace word under cursor (case-insensitive)" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>rl",
-  [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "Replace word under cursor in current line" }
-)
-vim.keymap.set("n", "<leader>sw", [[:/\<<C-r><C-w>\><CR>]], { desc = "Search word under cursor (case-insensitive)" })
-
 -- Move the Lines in visual mode
 vim.api.nvim_set_keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
@@ -372,7 +338,7 @@ vim.keymap.set("n", "<leader>cr", function()
   require("nvchad.tabufline").closeBufs_at_direction "right" -- or right
 end, { desc = "buffer close" })
 
--- Telescope
+-- Telescope mappings
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
 vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
@@ -388,24 +354,36 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-vim.keymap.set("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
+vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+vim.keymap.set("n", "<leader>cd", function()
+  require("telescope").extensions.zoxide.list()
+end, { desc = "Change Directory (zoxide)" })
+-- Your keymap opens this:
+vim.keymap.set("n", "<leader>gi", "<cmd>AdvancedGitSearch<CR>", { desc = "AdvancedGitSearch" })
+vim.keymap.set("x", "<leader>gi", "<cmd>AdvancedGitSearch<CR>", { desc = "AdvancedGitSearch" })
+-- vim.keymap.set(
+--   "n",
+--   "<leader>fg",
+--   "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+--   { desc = "Live Grep" }
+-- )
 
 local function toggle_telescope()
-  if vim.bo.filetype == 'TelescopePrompt' then
-    require('telescope.actions').close(vim.api.nvim_get_current_buf())
+  if vim.bo.filetype == "TelescopePrompt" then
+    require("telescope.actions").close(vim.api.nvim_get_current_buf())
   else
-    require('telescope.builtin').find_files({
+    require("telescope.builtin").find_files {
       attach_mappings = function(prompt_bufnr, map)
-        map('i', '<C-p>', function()
-          require('telescope.actions').close(prompt_bufnr)
+        map("i", "<C-p>", function()
+          require("telescope.actions").close(prompt_bufnr)
         end)
-        map('n', '<C-p>', function()
-          require('telescope.actions').close(prompt_bufnr)
+        map("n", "<C-p>", function()
+          require("telescope.actions").close(prompt_bufnr)
         end)
         return true
-      end
-    })
+      end,
+    }
   end
 end
 
@@ -440,6 +418,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Miscellaneous mappings
+
 -- Copy current file path to clipboard
 vim.keymap.set("n", "<leader>yp", function()
   local path = vim.fn.expand "%:p"
@@ -467,3 +447,38 @@ vim.keymap.set("n", "<leader>mx", function()
     vim.notify("Added executable permission", vim.log.levels.INFO)
   end
 end, { desc = "Toggle executable permission" })
+
+vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
+vim.keymap.set(
+  "n",
+  "<leader>rw",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>rW",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]],
+  { desc = "Replace word under cursor (case-insensitive)" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>rl",
+  [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor in current line" }
+)
+
+vim.keymap.set("n", "<leader>sw", [[:/\<<C-r><C-w>\><CR>]], { desc = "Search word under cursor (case-insensitive)" })
+
+-- By default, CTRL-U and CTRL-D scroll by half a screen (50% of the window height)
+-- Scroll by 25% of the window height and keep the cursor centered
+local scroll_percentage = 0.25
+-- Scroll by a percentage of the window height and keep the cursor centered
+vim.keymap.set("n", "<C-d>", function()
+  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
+  vim.cmd("normal! " .. lines .. "jzz")
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", function()
+  local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
+  vim.cmd("normal! " .. lines .. "kzz")
+end, { noremap = true, silent = true })
