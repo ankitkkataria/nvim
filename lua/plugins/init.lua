@@ -166,6 +166,10 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-telescope/telescope-fzf-native.nvim",
+      "AckslD/nvim-neoclip.lua",
+      "debugloop/telescope-undo.nvim",
+      "aaronhallaert/advanced-git-search.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
     },
     cmd = "Telescope",
     opts = function()
@@ -185,6 +189,10 @@ return {
     config = function(_, opts)
       require("telescope").setup(opts)
       require("telescope").load_extension "fzf"
+      require("telescope").load_extension "neoclip"
+      require("telescope").load_extension "undo"
+      require("telescope").load_extension "advanced_git_search"
+      require("telescope").load_extension "live_grep_args"
     end,
   },
   {
