@@ -392,6 +392,20 @@ local function toggle_telescope()
   end
 end
 
+-- Close any telescope window with C-p
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function(event)
+    local opts = { buffer = event.buf }
+    vim.keymap.set("i", "<C-p>", function()
+      require("telescope.actions").close(event.buf)
+    end, opts)
+    vim.keymap.set("n", "<C-p>", function()
+      require("telescope.actions").close(event.buf)
+    end, opts)
+  end,
+})
+
 vim.keymap.set("n", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
 vim.keymap.set("i", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
 

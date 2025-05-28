@@ -40,6 +40,7 @@ return {
       end
 
       -- Override the default Enter behavior
+      -- telescope_config.defaults.initial_mode = "normal" 
       telescope_config.defaults = telescope_config.defaults or {}
       telescope_config.defaults.mappings = telescope_config.defaults.mappings or {}
       telescope_config.defaults.mappings.i = telescope_config.defaults.mappings.i or {}
