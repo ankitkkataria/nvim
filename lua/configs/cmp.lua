@@ -211,8 +211,7 @@ M.setup = function()
       vim.keymap.set("i", "<C-j>", function() vim.lsp.buf.signature_help() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
       vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
       vim.keymap.set("n", "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "Workspace Symbols" })
-      vim.keymap.set("n", "<leader>ts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
-
+      -- vim.keymap.set("n", "<leader>fts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
     end
   })
     -- cmp.setup.cmdline(':', {
