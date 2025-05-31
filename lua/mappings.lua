@@ -355,7 +355,7 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-vim.keymap.set("n", "<leader>gbc", "<cmd>Telescope git_bcommits<CR>",{ desc = "Buffer Git Commits" })
+vim.keymap.set("n", "<leader>gbc", "<cmd>Telescope git_bcommits<CR>", { desc = "Buffer Git Commits" })
 vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 vim.keymap.set("n", "<leader>wk", "<cmd>Telescope keymaps<CR>", { desc = "Find Keymaps" })
@@ -468,18 +468,21 @@ vim.keymap.set("n", "<leader>mx", function()
 end, { desc = "Toggle executable permission" })
 
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { desc = "Switch to last buffer" })
+
 vim.keymap.set(
   "n",
   "<leader>rw",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "Replace word under cursor" }
 )
+
 vim.keymap.set(
   "n",
   "<leader>rW",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left><Left>]],
   { desc = "Replace word under cursor (case-insensitive)" }
 )
+
 vim.keymap.set(
   "n",
   "<leader>rl",
@@ -501,3 +504,4 @@ vim.keymap.set("n", "<C-u>", function()
   local lines = math.floor(vim.api.nvim_win_get_height(0) * scroll_percentage)
   vim.cmd("normal! " .. lines .. "kzz")
 end, { noremap = true, silent = true })
+

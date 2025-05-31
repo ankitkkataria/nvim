@@ -42,31 +42,35 @@ vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#FFD1DC", bold =
 -- Change search highlight color
 vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#FFD1DC", bold = true })
 
--- Change search highlight color when the cursor is on the selection 
+-- Change search highlight color when the cursor is on the selection
 vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#FF6F61", bold = true })
 
 -- Highlight yanked text using custom group
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="YankHighlight", timeout=200})
   augroup end
-]], false)
-
+]],
+  false
+)
 
 -- Highlight yanked text for a short time
-  vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
     augroup YankHighlight
       autocmd!
       autocmd TextYankPost * silent! lua vim.highlight.on_yank({higroup="Search", timeout=200})
     augroup end
-  ]], false)
+  ]],
+  false
+)
 
 vim.opt.smartindent = true
 vim.o.wrap = false
 
 vim.diagnostic.disable()
-
 
 vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "NONE" })
 
@@ -80,16 +84,16 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       and vim.bo.filetype ~= "commit"
       and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
     then
-      vim.cmd 'normal! g`"zz'  -- Added 'zz' to center the cursor
+      vim.cmd 'normal! g`"zz' -- Added 'zz' to center the cursor
     end
   end,
 })
 
 -- Disable automatic comment continuation
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "FileType"}, {
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "FileType" }, {
   pattern = "*",
   callback = function()
-    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+    vim.opt_local.formatoptions:remove { "c", "r", "o" }
   end,
 })
 
@@ -104,7 +108,7 @@ vim.api.nvim_create_autocmd("BufDelete", {
 
 vim.api.nvim_set_hl(0, "FlashMatch", { fg = "#ffffff", bg = "NONE", bold = false })
 vim.api.nvim_set_hl(0, "FlashCurrent", { fg = "#ffffff", bg = "NONE", bold = true })
-vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true }) 
+vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true })
 
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333344" })
 
@@ -117,4 +121,3 @@ vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true 
 -- vim.api.nvim_set_hl(0, "MyPastelOrange", { fg = "#FFB347", bg = "NONE", bold = false })
 -- vim.api.nvim_set_hl(0, "MyPastelTeal", { fg = "#99E1D9", bg = "NONE", bold = false })
 -- vim.api.nvim_set_hl(0, "MyPastelCoral", { fg = "#FF6F61", bg = "NONE", bold = false })
-
