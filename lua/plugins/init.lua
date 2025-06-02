@@ -165,6 +165,8 @@ return {
     -- detect tabstop and shiftwidth automatically
     "tpope/vim-sleuth",
   },
+  { "nvim-java/nvim-java" },
+
   -- {
   --   "folke/tokyonight.nvim",
   --   opts = {
@@ -174,7 +176,7 @@ return {
   --       floats = "transparent",
   --     },
   --   },
-  -- }, 
+  -- },
   --  Powerful Git integration for Vim
   -- {
   --   "tpope/vim-fugitive",
