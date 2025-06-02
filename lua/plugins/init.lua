@@ -166,7 +166,6 @@ return {
     "tpope/vim-sleuth",
   },
   { "nvim-java/nvim-java" },
-
   -- {
   --   "folke/tokyonight.nvim",
   --   opts = {

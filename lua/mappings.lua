@@ -28,6 +28,7 @@ vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
 vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
+vim.keymap.set('n', 'c', '"_c')
 
 -- EasyMotion Settings
 -- local hop = require "hop"
