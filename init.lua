@@ -45,6 +45,9 @@ vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#FFD1DC", bold = true }
 -- Change search highlight color when the cursor is on the selection
 vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#FF6F61", bold = true })
 
+-- If you want to change the color of you cursor line
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333344" })
+
 -- Highlight yanked text using custom group
 vim.api.nvim_exec(
   [[
@@ -110,9 +113,7 @@ vim.api.nvim_set_hl(0, "FlashMatch", { fg = "#ffffff", bg = "NONE", bold = false
 vim.api.nvim_set_hl(0, "FlashCurrent", { fg = "#ffffff", bg = "NONE", bold = true })
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true })
 
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333344" })
-
--- Just some colors
+-- Just some colors for reference purpose
 -- vim.api.nvim_set_hl(0, "MyPastelPink", { fg = "#FFD1DC", bg = "NONE", bold = false })
 -- vim.api.nvim_set_hl(0, "MyPastelBlue", { fg = "#AEC6CF", bg = "NONE", bold = false })
 -- vim.api.nvim_set_hl(0, "MyPastelGreen", { fg = "#77DD77", bg = "NONE", bold = false })
