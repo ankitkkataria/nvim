@@ -26,6 +26,7 @@ return {
         "prettier",
         "clangd",
         "jdtls",
+        "cpptools"
       },
     },
   },

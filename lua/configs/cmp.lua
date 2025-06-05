@@ -1,7 +1,7 @@
 local M = {}
 M.setup = function()
   local cmp = require "cmp"
-  local builtin = require("telescope.builtin")
+  local builtin = require "telescope.builtin"
   dofile(vim.g.base46_cache .. "cmp")
   local cmp_ui = require("nvconfig").ui.cmp
   local cmp_style = cmp_ui.style
@@ -120,14 +120,14 @@ M.setup = function()
   end
   cmp.setup(vim.tbl_deep_extend("force", options, require "nvchad.cmp"))
 
-  -- -- `/` cmdline setup.
+  -- `/` cmdline setup.
   -- cmp.setup.cmdline("/", {
   --   mapping = cmp.mapping.preset.cmdline(),
   --   sources = {
   --     { name = "buffer" },
   --   },
   -- })
-  --
+
   -- -- `:` cmdline setup.
   -- cmp.setup.cmdline(":", {
   --   mapping = cmp.mapping.preset.cmdline(),
@@ -143,53 +143,52 @@ M.setup = function()
   --   }),
   -- })
   -- Set up cmdline mappings without Tab functionality
-  local cmdline_mappings = cmp.mapping.preset.cmdline({
+  local cmdline_mappings = cmp.mapping.preset.cmdline {
     -- Override with explicit Up/Down/Enter mappings
-    ['<Up>'] = {
+    ["<Up>"] = {
       c = function()
         if cmp.visible() then
           cmp.select_prev_item()
         else
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'n', true)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Up>", true, true, true), "n", true)
         end
       end,
     },
-    ['<Down>'] = {
+    ["<Down>"] = {
       c = function()
         if cmp.visible() then
           cmp.select_next_item()
         else
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'n', true)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Down>", true, true, true), "n", true)
         end
       end,
     },
-    ['<Tab>'] = {
+    ["<Tab>"] = {
       c = function()
         if cmp.visible() then
-          cmp.confirm({ select = true })
+          cmp.select_next_item() -- Selects the next item
         else
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'n', true)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
         end
       end,
+    },
+  }
+
+  -- `/` cmdline setup.
+  cmp.setup.cmdline("/", {
+    mapping = cmdline_mappings,
+    sources = {
+      { name = "buffer" },
     },
   })
 
-     -- `/` cmdline setup.
-    cmp.setup.cmdline('/', {
-      mapping = cmdline_mappings,
-      sources = {
-        { name = 'buffer' }
-      }
-    })   
-
-  vim.api.nvim_create_autocmd('LspAttach', {
-    desc = 'LSP actions',
+  vim.api.nvim_create_autocmd("LspAttach", {
+    desc = "LSP actions",
     callback = function(event)
-
       local opts = { buffer = event.buf, remap = false }
-      vim.keymap.set("n", "gr", function() 
+      vim.keymap.set("n", "gr", function()
         -- Try to use Telescope if available, otherwise fall back to LSP references
-        local ok, telescope = pcall(require, 'telescope.builtin')
+        local ok, telescope = pcall(require, "telescope.builtin")
         if ok then
           telescope.lsp_references()
         else
@@ -199,33 +198,58 @@ M.setup = function()
 
       local opts = { buffer = event.buf, remap = false }
       -- vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Reference" }))
-      vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Definition" }))
-      vim.keymap.set("n", "gh", function() vim.lsp.buf.hover() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
-      vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Workspace Symbol" }))
-      vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.setloclist() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Show Diagnostics" }))
-      vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, vim.tbl_deep_extend("force", opts, { desc = "Next Diagnostic" }))
-      vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, vim.tbl_deep_extend("force", opts, { desc = "Previous Diagnostic" }))
-      vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Code Action" }))
-      vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, vim.tbl_deep_extend("force", opts, { desc = "LSP References" }))
-      vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Rename" }))
-      vim.keymap.set("i", "<C-j>", function() vim.lsp.buf.signature_help() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
-      vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
+      vim.keymap.set("n", "gd", function()
+        vim.lsp.buf.definition()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Definition" }))
+      vim.keymap.set("n", "gh", function()
+        vim.lsp.buf.hover()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
+      vim.keymap.set("n", "<leader>vws", function()
+        vim.lsp.buf.workspace_symbol()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Workspace Symbol" }))
+      vim.keymap.set("n", "<leader>vd", function()
+        vim.diagnostic.setloclist()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Show Diagnostics" }))
+      vim.keymap.set("n", "[d", function()
+        vim.diagnostic.goto_next()
+      end, vim.tbl_deep_extend("force", opts, { desc = "Next Diagnostic" }))
+      vim.keymap.set("n", "]d", function()
+        vim.diagnostic.goto_prev()
+      end, vim.tbl_deep_extend("force", opts, { desc = "Previous Diagnostic" }))
+      vim.keymap.set("n", "<leader>vca", function()
+        vim.lsp.buf.code_action()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Code Action" }))
+      vim.keymap.set("n", "<leader>vrr", function()
+        vim.lsp.buf.references()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP References" }))
+      vim.keymap.set("n", "<leader>vrn", function()
+        vim.lsp.buf.rename()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Rename" }))
+      vim.keymap.set("i", "<C-j>", function()
+        vim.lsp.buf.signature_help()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
+      vim.keymap.set(
+        "n",
+        "<leader>fs",
+        builtin.lsp_document_symbols,
+        vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" })
+      )
       vim.keymap.set("n", "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "Workspace Symbols" })
       -- vim.keymap.set("n", "<leader>fts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
-    end
+    end,
   })
-    -- cmp.setup.cmdline(':', {
-    --   mapping = cmdline_mappings,
-    --   sources = cmp.config.sources({
-    --     { name = 'path' }
-    --   }, {
-    --     {
-    --       name = 'cmdline',
-    --       option = {
-    --         ignore_cmds = { 'Man', '!' }
-    --       }
-    --     }
-    --   })
-    -- })
+  -- cmp.setup.cmdline(':', {
+  --   mapping = cmdline_mappings,
+  --   sources = cmp.config.sources({
+  --     { name = 'path' }
+  --   }, {
+  --     {
+  --       name = 'cmdline',
+  --       option = {
+  --         ignore_cmds = { 'Man', '!' }
+  --       }
+  --     }
+  --   })
+  -- })
 end
 return M
