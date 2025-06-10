@@ -56,14 +56,20 @@ M.nvdash = {
     { txt = "󰈭  Find Word           ", keys = "fw", cmd = "Telescope live_grep" },
     {
       txt = "  File Explorer       ",
-      keys = "m",
+      keys = "<C-m>",
       cmd = ":lua require('mini.files').open(vim.loop.cwd(), false)<CR>",
     },
     {
-      txt = "  Sessions            ",
+      txt = "  Saved Session             ",
+      keys = "ss",
+      cmd = ":lua require('persistence').load()",
+    },
+    {
+      txt = "  All Sessions            ",
       keys = "sa",
       cmd = ":lua require('persistence').select()",
     },
+
     -- { txt = "󱥚  Themes", keys = "th", cmd = ":lua require('nvchad.themes').open()" },
     -- { txt = "  Mappings", keys = "ch", cmd = "NvCheatsheet" },
     --
