@@ -320,27 +320,27 @@ end, { desc = "buffer goto next" })
 
 vim.keymap.set("n", "<leader>x", function()
   require("nvchad.tabufline").close_buffer()
-end, { desc = "buffer close" })
+end, { desc = "Close current buffer" })
 
 vim.keymap.set("n", "<leader>cc", function()
   require("nvchad.tabufline").close_buffer()
-end, { desc = "buffer close" })
+end, { desc = "Close current buffer" })
 
 vim.keymap.set("n", "<leader>co", function()
-  require("nvchad.tabufline").closeAllBufs(false) -- excludes current buf
-end, { desc = "buffer close" })
+  require("nvchad.tabufline").closeAllBufs(false) 
+end, { desc = "Close other buffers" })
 
 vim.keymap.set("n", "<leader>ca", function()
-  require("nvchad.tabufline").closeAllBufs(true) -- includes current buf
-end, { desc = "buffer close" })
+  require("nvchad.tabufline").closeAllBufs(true) 
+end, { desc = "Close all buffers" })
 
 vim.keymap.set("n", "<leader>cl", function()
-  require("nvchad.tabufline").closeBufs_at_direction "left" -- or right
-end, { desc = "buffer close" })
+  require("nvchad.tabufline").closeBufs_at_direction "left" 
+end, { desc = "Close buffers to the left" })
 
 vim.keymap.set("n", "<leader>cr", function()
-  require("nvchad.tabufline").closeBufs_at_direction "right" -- or right
-end, { desc = "buffer close" })
+  require("nvchad.tabufline").closeBufs_at_direction "right" 
+end, { desc = "Close buffers to the right" })
 
 -- Telescope mappings
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
@@ -355,7 +355,6 @@ vim.keymap.set(
   "<cmd>Telescope current_buffer_fuzzy_find<CR>",
   { desc = "telescope find in current buffer" }
 )
-
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 vim.keymap.set("n", "<leader>gbc", "<cmd>Telescope git_bcommits<CR>", { desc = "Buffer Git Commits" })
