@@ -40,17 +40,13 @@ vim.keymap.set("", "<leader>l", function()
   hop.hint_lines_skip_whitespace()
 end, { remap = true })
 
--- Select text with Shift + Arrow keys in Insert mode
-vim.api.nvim_set_keymap("i", "<S-Left>", "<C-O>v<Left>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Right>", "<C-O>v<Right>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Up>", "<C-O>v<Up>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Down>", "<C-O>v<Down>", { noremap = true, silent = true })
+-- Select text with Shift + left, right arrow keys in Insert mode
+vim.api.nvim_set_keymap("i", "<S-Left>", "<C-O>vh", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<S-Right>", "<C-O>vl", { noremap = true, silent = true })
 
 -- Select text to the beginning and end of the line with Shift + Home/End in Insert mode
 vim.api.nvim_set_keymap("i", "<S-Home>", "<C-O>v^", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-End>", "<C-O>v<End>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Left>", "<C-O>v<Left>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<S-Right>", "<C-O>v<Right>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "<S-End>", "<C-O>v$", { noremap = true, silent = true })
 
 -- Delete selected text with Backspace in Visual mode and go to Insert mode
 vim.api.nvim_set_keymap("v", "<BS>", "dgi", { noremap = true, silent = true })
@@ -58,11 +54,8 @@ vim.api.nvim_set_keymap("v", "<BS>", "dgi", { noremap = true, silent = true })
 -- Indenting selected text and even after that we shall stay in visual mode so we can further indent
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
-
--- Indent using Tab in visual mode
+-- Alternate mappings for Indenting code in visual mode
 vim.api.nvim_set_keymap("v", "<Tab>", ">gv", { noremap = true, silent = true })
-
--- Outdent using Shift-Tab in visual mode
 vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
 
 -- Keymaps for splits
@@ -104,6 +97,17 @@ end, { desc = "terminal toggleable vertical term" })
 vim.keymap.set({ "n", "t" }, "<C-f>", function()
   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
+
+-- Persistent terminal (Search through open terminals using <leader>pt)
+vim.keymap.set("n", "<leader>ht", function()
+  require("nvchad.term").new { pos = "sp" }
+end, { desc = "terminal new horizontal term" })
+
+vim.keymap.set("n", "<leader>vt", function()
+  require("nvchad.term").new { pos = "vsp" }
+end, { desc = "terminal new vertical term" })
+
+vim.keymap.set("t", "jj", "<C-\\><C-N>", { desc = "Terminal escape terminal mode" })
 
 -- Toggle diagnostics
 vim.keymap.set("n", "<leader>tt", function()
