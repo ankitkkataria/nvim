@@ -75,13 +75,19 @@ vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+
 -- For joining two lines
 vim.api.nvim_set_keymap("n", "<leader>j", "mzJ`z", { noremap = true, silent = true })
+
+-- For toggling line wrap
+vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>")
 
 -- nvimtree
 -- vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 -- vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
+-- Floating terminals mappings
+-- Vertcal Terminal
 vim.keymap.set({ "n", "t" }, "<C-n>", function()
   -- Get the path of the current file
   local current_file_dir = vim.fn.expand "%:p:h"
@@ -94,22 +100,18 @@ vim.keymap.set({ "n", "t" }, "<C-n>", function()
   require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "terminal toggleable vertical term" })
 
+-- Horizontal Terminal
+vim.keymap.set({ "n", "t" }, "<C-f>", function()
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "terminal toggle floating term" })
+
+-- Toggle diagnostics
 vim.keymap.set("n", "<leader>tt", function()
   vim.diagnostic.config {
     virtual_text = not vim.diagnostic.config().virtual_text,
   }
 end, { desc = "Toggle inline diagnostics" })
 
-vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>", opts)
-
--- toggleable
-vim.keymap.set({ "n", "t" }, "<C-n>", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-end, { desc = "terminal toggleable vertical term" })
-
-vim.keymap.set({ "n", "t" }, "<C-f>", function()
-  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
-end, { desc = "terminal toggle floating term" })
 
 vim.keymap.set("n", "<leader>n", function()
   -- Use absolute path instead of relative path
