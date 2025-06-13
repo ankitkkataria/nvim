@@ -73,7 +73,7 @@ vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<leader>j", "mzJ`z", { noremap = true, silent = true })
 
 -- For toggling line wrap
-vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>")
+vim.keymap.set("n", "<leader>wl", "<cmd>set wrap!<CR>")
 
 -- nvimtree
 -- vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
