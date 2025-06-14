@@ -45,9 +45,6 @@ vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#FFD1DC", bold = true }
 -- Change search highlight color when the cursor is on the selection
 vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#FF6F61", bold = true })
 
--- If you want to change the color of you cursor line
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333344" })
-
 -- Highlight yanked text using custom group
 vim.api.nvim_exec(
   [[
@@ -73,7 +70,7 @@ vim.api.nvim_exec(
 vim.opt.smartindent = true
 vim.o.wrap = false
 
-vim.diagnostic.disable()
+-- vim.diagnostic.disable()
 
 vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "NONE" })
 
