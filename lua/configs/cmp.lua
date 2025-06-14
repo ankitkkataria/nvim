@@ -187,6 +187,7 @@ M.setup = function()
     desc = "LSP actions",
     callback = function(event)
       local opts = { buffer = event.buf, remap = false }
+
       vim.keymap.set("n", "gr", function()
         -- Try to use Telescope if available, otherwise fall back to LSP references
         local ok, telescope = pcall(require, "telescope.builtin")
@@ -197,8 +198,8 @@ M.setup = function()
         end
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Reference" }))
 
-      local opts = { buffer = event.buf, remap = false }
       -- vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Reference" }))
+
       vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition()
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Goto Definition" }))
@@ -214,6 +215,10 @@ M.setup = function()
       vim.keymap.set("n", "]d", function()
         vim.diagnostic.goto_prev()
       end, vim.tbl_deep_extend("force", opts, { desc = "Previous Diagnostic" }))
+
+      vim.keymap.set("n", "<F9>", function()
+        vim.lsp.buf.hover()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
 
       vim.keymap.set("n", "gh", function()
         vim.lsp.buf.hover()
@@ -245,13 +250,19 @@ M.setup = function()
         vim.lsp.buf.signature_help()
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
 
+      vim.keymap.set("i", "<F9>", function()
+        vim.lsp.buf.signature_help()
+      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
+
       vim.keymap.set(
         "n",
         "<leader>fs",
         builtin.lsp_document_symbols,
         vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" })
       )
+      
       vim.keymap.set("n", "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "Workspace Symbols" })
+
       -- vim.keymap.set("n", "<leader>fts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))
     end,
   })
