@@ -13,6 +13,7 @@ vim.keymap.set("v", "J", "5gj")
 vim.keymap.set("v", "K", "5gk")
 vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
+vim.keymap.set("n", "<F9>", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
 
 -- Move the Lines in visual mode
@@ -54,6 +55,7 @@ vim.api.nvim_set_keymap("v", "<BS>", "dgi", { noremap = true, silent = true })
 -- Indenting selected text and even after that we shall stay in visual mode so we can further indent
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
+
 -- Alternate mappings for Indenting code in visual mode
 vim.api.nvim_set_keymap("v", "<Tab>", ">gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
@@ -444,7 +446,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Miscellaneous mappings
-
 -- Copy current file path to clipboard
 vim.keymap.set("n", "<leader>yp", function()
   local path = vim.fn.expand "%:p"
