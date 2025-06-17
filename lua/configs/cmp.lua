@@ -260,7 +260,7 @@ M.setup = function()
         builtin.lsp_document_symbols,
         vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" })
       )
-      
+
       vim.keymap.set("n", "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", { desc = "Workspace Symbols" })
 
       -- vim.keymap.set("n", "<leader>fts", "<cmd>Telescope treesitter<cr>", vim.tbl_deep_extend("force", opts, { desc = "Find Symbols" }))

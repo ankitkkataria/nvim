@@ -87,7 +87,7 @@ return {
           f = miniai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
         },
         -- Keep error feedback enabled so it doesn't interfere with other plugins
-        silent = false,
+        silent = true,
         -- Remove search_method to use default which might fix conflicts
         -- Remove the custom mappings so it does not override default text objects.
         mappings = {},

@@ -29,7 +29,7 @@ vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
 -- vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
-vim.keymap.set('n', 'c', '"_c')
+vim.keymap.set("n", "c", '"_c')
 
 -- EasyMotion Settings
 local hop = require "hop"
@@ -117,7 +117,6 @@ vim.keymap.set("n", "<leader>tt", function()
     virtual_text = not vim.diagnostic.config().virtual_text,
   }
 end, { desc = "Toggle inline diagnostics" })
-
 
 vim.keymap.set("n", "<leader>n", function()
   -- Use absolute path instead of relative path
@@ -333,19 +332,19 @@ vim.keymap.set("n", "<leader>cc", function()
 end, { desc = "Close current buffer" })
 
 vim.keymap.set("n", "<leader>co", function()
-  require("nvchad.tabufline").closeAllBufs(false) 
+  require("nvchad.tabufline").closeAllBufs(false)
 end, { desc = "Close other buffers" })
 
 vim.keymap.set("n", "<leader>ca", function()
-  require("nvchad.tabufline").closeAllBufs(true) 
+  require("nvchad.tabufline").closeAllBufs(true)
 end, { desc = "Close all buffers" })
 
 vim.keymap.set("n", "<leader>cl", function()
-  require("nvchad.tabufline").closeBufs_at_direction "left" 
+  require("nvchad.tabufline").closeBufs_at_direction "left"
 end, { desc = "Close buffers to the left" })
 
 vim.keymap.set("n", "<leader>cr", function()
-  require("nvchad.tabufline").closeBufs_at_direction "right" 
+  require("nvchad.tabufline").closeBufs_at_direction "right"
 end, { desc = "Close buffers to the right" })
 
 -- Telescope mappings
@@ -444,6 +443,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "<leader>cc", close_telescope, { buffer = true, desc = "close telescope" })
   end,
 })
+
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Workspace Symbols" })
 
 -- Miscellaneous mappings
 -- Copy current file path to clipboard
