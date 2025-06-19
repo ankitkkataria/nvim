@@ -413,8 +413,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.keymap.set("n", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
-vim.keymap.set("i", "<C-p>", toggle_telescope, { desc = "toggle telescope find files" })
+vim.keymap.set("n", "<C-p>", toggle_telescope, { desc = "Toggle telescope find files" })
+vim.keymap.set("i", "<C-p>", toggle_telescope, { desc = "Toggle telescope find files" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "TelescopePrompt",
@@ -439,12 +439,14 @@ end
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "TelescopePrompt",
   callback = function()
-    vim.keymap.set("n", "<leader>x", close_telescope, { buffer = true, desc = "close telescope" })
-    vim.keymap.set("n", "<leader>cc", close_telescope, { buffer = true, desc = "close telescope" })
+    vim.keymap.set("n", "<leader>x", close_telescope, { buffer = true, desc = "Close telescope" })
+    vim.keymap.set("n", "<leader>cc", close_telescope, { buffer = true, desc = "Close telescope" })
   end,
 })
 
-vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Workspace Symbols" })
+vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Undo telescope picker" })
+vim.keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Resume last telescope picker" })
+vim.keymap.set("n", "<leader>sp", "<cmd>Telescope spell_suggest<CR>", { desc = "Spell suggestions" })
 
 -- Miscellaneous mappings
 -- Copy current file path to clipboard
