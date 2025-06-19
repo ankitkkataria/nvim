@@ -28,8 +28,10 @@ vim.keymap.set({ "n", "v" }, "P", [["+P]])
 vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
+
+-- Not really likeing these bindings below 
 -- vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
-vim.keymap.set("n", "c", '"_c')
+-- vim.keymap.set("n", "c", '"_c')
 
 -- EasyMotion Settings
 local hop = require "hop"
@@ -364,7 +366,7 @@ vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "tel
 vim.keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 vim.keymap.set("n", "<leader>gbc", "<cmd>Telescope git_bcommits<CR>", { desc = "Buffer Git Commits" })
 vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
-vim.keymap.set("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+vim.keymap.set("n", "<leader>ft", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 vim.keymap.set("n", "<leader>wk", "<cmd>Telescope keymaps<CR>", { desc = "Find Keymaps" })
 
 vim.keymap.set("n", "<leader>cd", function()
@@ -495,7 +497,7 @@ vim.keymap.set(
 
 vim.keymap.set(
   "n",
-  "<leader>rl",
+  "<leader>rlw",
   [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "Replace word under cursor in current line" }
 )
