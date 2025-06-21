@@ -216,9 +216,9 @@ M.setup = function()
         vim.diagnostic.goto_prev()
       end, vim.tbl_deep_extend("force", opts, { desc = "Previous Diagnostic" }))
 
-      vim.keymap.set("n", "<F9>", function()
-        vim.lsp.buf.hover()
-      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
+      -- vim.keymap.set("n", "<F9>", function()
+      --   vim.lsp.buf.hover()
+      -- end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
 
       vim.keymap.set("n", "gh", function()
         vim.lsp.buf.hover()
@@ -250,9 +250,9 @@ M.setup = function()
         vim.lsp.buf.signature_help()
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
 
-      vim.keymap.set("i", "<F9>", function()
-        vim.lsp.buf.signature_help()
-      end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
+      -- vim.keymap.set("i", "<F9>", function()
+      --   vim.lsp.buf.signature_help()
+      -- end, vim.tbl_deep_extend("force", opts, { desc = "LSP Signature Help" }))
 
       vim.keymap.set(
         "n",

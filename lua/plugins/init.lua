@@ -166,6 +166,8 @@ return {
     "tpope/vim-sleuth",
   },
   { "nvim-java/nvim-java" },
+  -- { "nvzone/volt" },
+  -- { "nvzone/menu" },
   -- {
   --   "folke/tokyonight.nvim",
   --   opts = {
