@@ -29,7 +29,7 @@ vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
 
--- Not really likeing these bindings below 
+-- Not really likeing these bindings below
 -- vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
 -- vim.keymap.set("n", "c", '"_c')
 
@@ -97,12 +97,14 @@ vim.keymap.set({ "n", "t" }, "<C-n>", function()
   require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "terminal toggleable vertical term" })
 
--- Horizontal Terminal
+-- Floating Terminal
 vim.keymap.set({ "n", "t" }, "<C-f>", function()
   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
 
--- Persistent terminal (Search through open terminals using <leader>pt)
+-- vim.keymap.set({ "n", "t" }, "<C-f>", "<cmd>FloatermToggle<CR>", { desc = "terminal toggle floating term" })
+
+-- Persistent terminal (Search through open terminals using <leader>ft)
 vim.keymap.set("n", "<leader>ht", function()
   require("nvchad.term").new { pos = "sp" }
 end, { desc = "terminal new horizontal term" })
