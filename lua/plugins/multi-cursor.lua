@@ -41,7 +41,15 @@ return {
         layerSet({"n", "x"}, "md", mc.deleteCursor)
 
         -- Enable and clear cursors using escape.
-        layerSet("n", "<leader>x", function()
+       layerSet("n", "<leader>x", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+
+       layerSet("n", "q", function()
           if not mc.cursorsEnabled() then
             mc.enableCursors()
           else
