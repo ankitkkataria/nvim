@@ -2,6 +2,7 @@ require "nvchad.mappings"
 
 -- Basic remaps
 vim.keymap.set("i", "jj", "<ESC>")
+vim.keymap.set("i", "JJ", "<ESC>")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "K", "5gk")
