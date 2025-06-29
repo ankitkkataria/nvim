@@ -53,6 +53,7 @@
   "telescope-undo.nvim": { "branch": "main", "commit": "928d0c2dc9606e01e2cc547196f48d2eaecf58e5" },
   "telescope-zoxide": { "branch": "main", "commit": "54bfe630bad08dc9891ec78c7cf8db38dd725c97" },
   "telescope.nvim": { "branch": "master", "commit": "b4da76be54691e854d3e0e02c36b0245f945c2c7" },
+  "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "d52d70780ca6497ed28ad1b11bb1e981f666f62a" },
   "ui": { "branch": "v3.0", "commit": "d3fb80f458bb91a170fb4aa8c0ce40867c71fcb9" },
   "vim-sleuth": { "branch": "master", "commit": "be69bff86754b1aa5adcbb527d7fcd1635a84080" },
   "volt": { "branch": "main", "commit": "7b8c5e790120d9f08c8487dcb80692db6d2087a1" },

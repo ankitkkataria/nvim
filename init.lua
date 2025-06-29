@@ -110,6 +110,22 @@ vim.api.nvim_set_hl(0, "FlashMatch", { fg = "#ffffff", bg = "NONE", bold = false
 vim.api.nvim_set_hl(0, "FlashCurrent", { fg = "#ffffff", bg = "NONE", bold = true })
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#FF007F", bg = "NONE", bold = true })
 
+require("tiny-inline-diagnostic").setup({
+  -- ...
+  signs = {
+    left = "",
+    right = "",
+    diag = "●",
+    arrow = "    ",
+    up_arrow = "    ",
+    vertical = " │",
+    vertical_end = " └",
+  },
+  blend = {
+    factor = 0.22,
+  },
+})
+
 -- Just some colors for reference purpose
 -- vim.api.nvim_set_hl(0, "MyPastelPink", { fg = "#FFD1DC", bg = "NONE", bold = false })
 -- vim.api.nvim_set_hl(0, "MyPastelBlue", { fg = "#AEC6CF", bg = "NONE", bold = false })
