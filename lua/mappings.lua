@@ -16,6 +16,7 @@ vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
 -- vim.keymap.set("n", "<F9>", ":noh<cr>")
 vim.keymap.set({ "n", "v" }, "mb", "%")
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 
 -- Move the Lines in visual mode
 vim.api.nvim_set_keymap("v", "<C-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
@@ -452,6 +453,8 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Undo telescope picker" })
 vim.keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Resume last telescope picker" })
 vim.keymap.set("n", "<leader>sp", "<cmd>Telescope spell_suggest<CR>", { desc = "Spell suggestions" })
+vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>ds", "<cmd>lua require('telescope.builtin').diagnostics({ bufnr = 0 })<CR>", opts)
 
 -- Miscellaneous mappings
 -- Copy current file path to clipboard

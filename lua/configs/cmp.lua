@@ -228,8 +228,6 @@ M.setup = function()
         vim.lsp.buf.workspace_symbol()
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Workspace Symbol" }))
 
-      vim.keymap.set("n", "<leader>vd", "<cmd>Telescope diagnostics<CR>", { desc = "Current Buffer Diagnostics" })
-
       vim.keymap.set("n", "<leader>vD", function()
         vim.diagnostic.setloclist()
       end, vim.tbl_deep_extend("force", opts, { desc = "LSP Show Diagnostics" }))
