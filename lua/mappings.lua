@@ -31,6 +31,8 @@ vim.keymap.set({ "n", "v" }, "d", [["+d]])
 vim.keymap.set("x", "p", [["_dp]])
 vim.keymap.set("x", "P", [["_dP]])
 
+vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+vim.keymap.set("v", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 -- Not really likeing these bindings below
 -- vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
 -- vim.keymap.set("n", "c", '"_c')
@@ -341,9 +343,9 @@ vim.keymap.set("n", "<leader>co", function()
   require("nvchad.tabufline").closeAllBufs(false)
 end, { desc = "Close other buffers" })
 
-vim.keymap.set("n", "<leader>ca", function()
-  require("nvchad.tabufline").closeAllBufs(true)
-end, { desc = "Close all buffers" })
+-- vim.keymap.set("n", "<leader>ca", function()
+--   require("nvchad.tabufline").closeAllBufs(true)
+-- end, { desc = "Close all buffers" })
 
 vim.keymap.set("n", "<leader>cl", function()
   require("nvchad.tabufline").closeBufs_at_direction "left"
