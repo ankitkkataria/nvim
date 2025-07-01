@@ -14,6 +14,17 @@ return {
     opts = function()
       local telescope_config = require "nvchad.configs.telescope"
 
+      telescope_config.defaults = telescope_config.defaults or {}
+      telescope_config.defaults.path_display = { "smart" }
+      telescope_config.defaults.mappings = telescope_config.defaults.mappings or {}
+      telescope_config.defaults.mappings.i = telescope_config.defaults.mappings.i or {}
+      telescope_config.defaults.mappings.i["<C-k>"] = function(...)
+        return require("telescope.actions").move_selection_previous(...)
+      end
+      telescope_config.defaults.mappings.i["<C-j>"] = function(...)
+        return require("telescope.actions").move_selection_next(...)
+      end
+
       -- Add basic fzf configuration
       telescope_config.extensions = telescope_config.extensions or {}
       telescope_config.extensions.fzf = {
@@ -40,7 +51,7 @@ return {
       end
 
       -- Override the default Enter behavior
-      -- telescope_config.defaults.initial_mode = "normal" 
+      -- telescope_config.defaults.initial_mode = "normal"
       telescope_config.defaults = telescope_config.defaults or {}
       telescope_config.defaults.mappings = telescope_config.defaults.mappings or {}
       telescope_config.defaults.mappings.i = telescope_config.defaults.mappings.i or {}
