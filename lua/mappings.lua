@@ -70,6 +70,7 @@ vim.api.nvim_set_keymap("v", "<S-Tab>", "<gv", { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>sv", ":vsplit<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>sh", ":split<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>sc", ":close<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) 
 
 -- Movement between splits
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
