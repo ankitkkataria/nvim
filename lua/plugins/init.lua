@@ -165,7 +165,7 @@ return {
     -- detect tabstop and shiftwidth automatically
     "tpope/vim-sleuth",
   },
-  { "nvim-java/nvim-java" },
+  -- { "nvim-java/nvim-java" },
   -- { "nvzone/volt" },
   -- { "nvzone/menu" },
   -- {
