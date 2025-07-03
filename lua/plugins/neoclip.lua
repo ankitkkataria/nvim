@@ -9,12 +9,12 @@ return {
       history = 1000,
       enable_persistent_history = true,
       length_limit = 1048576,
-      continuous_sync = true,
+      continuous_sync = false,
       db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
       filter = nil,
       preview = true,
       prompt = nil,
-      default_register = "+", -- Changed to system clipboard register
+      -- default_register = '"', -- Changed to system clipboard register
       default_register_macros = "q",
       enable_macro_history = true,
       content_spec_column = false,
