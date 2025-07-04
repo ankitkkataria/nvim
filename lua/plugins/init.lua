@@ -27,6 +27,7 @@ return {
         "clangd",
         "jdtls",
         "cpptools",
+        "pylsp"
       },
     },
   },
@@ -41,6 +42,7 @@ return {
         "css",
         "java",
         "cpp",
+        "python",
       },
     },
   },
