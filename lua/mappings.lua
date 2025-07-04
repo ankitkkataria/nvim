@@ -456,8 +456,8 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Undo telescope picker" })
 vim.keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Resume last telescope picker" })
 vim.keymap.set("n", "<leader>sp", "<cmd>Telescope spell_suggest<CR>", { desc = "Spell suggestions" })
-vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics<CR>", opts)
-vim.keymap.set("n", "<leader>ds", "<cmd>lua require('telescope.builtin').diagnostics({ bufnr = 0 })<CR>", opts)
+vim.keymap.set("n", "<leader>fD", "<cmd>Telescope diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>fd", "<cmd>lua require('telescope.builtin').diagnostics({ bufnr = 0 })<CR>", opts)
 
 -- Miscellaneous mappings
 -- Copy current file path to clipboard
