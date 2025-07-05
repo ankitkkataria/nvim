@@ -65,12 +65,12 @@ return {
     end)
 
     -- Toggle previous & next buffers stored within Harpoon list
-    vim.keymap.set("n", "<leader>hn", function()
-      harpoon:list():prev()
-    end)
-    vim.keymap.set("n", "<leader>hp", function()
-      harpoon:list():next()
-    end)
+    --   vim.keymap.set("n", "<leader>hn", function()
+    --   harpoon:list():prev()
+    -- end)
+    -- vim.keymap.set("n", "<leader>hl", function()
+    --   harpoon:list():next()
+    -- end)
 
     -- Telescope inside Harpoon Window
     -- vim.keymap.set("n", "<C-f>", function()
