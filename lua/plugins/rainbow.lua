@@ -23,22 +23,22 @@ return {
         },
       }
       -- For dark mode bracket colors
-      vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#00ffff", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#c792ea", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#ff9500", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#ff6b9d", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#ffd93d", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#0080ff", bold = true })
-      vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#95e454", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#00ffff", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#c792ea", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#ff9500", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#ff6b9d", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#ffd93d", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#0080ff", bold = true })
+      -- vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#95e454", bold = true })
 
       -- For light mode bracket colors
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#007b83", bold = true }) 
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#6a1b9a", bold = true }) 
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#d35400", bold = true }) 
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#b71c1c", bold = true }) 
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#b7950b", bold = true }) 
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#0d47a1", bold = true })
-      -- vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#1b5e20", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#007b83", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#6a1b9a", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#d35400", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#b71c1c", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#b7950b", bold = true }) 
+      vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#0d47a1", bold = true })
+      vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#1b5e20", bold = true }) 
 
       -- vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#e06c75", bold = true })
       -- vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#e5c07b", bold = true })

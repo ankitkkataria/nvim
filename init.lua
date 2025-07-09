@@ -37,10 +37,10 @@ vim.schedule(function()
 end)
 
 -- Define custom yank highlight group
-vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#000000", bg = "#FFD1DC", bold = true })
+vim.api.nvim_set_hl(0, "YankHighlight", { fg = "#ffffff", bg = "#3a3a3a", bold = true })
 
 -- Change search highlight color
-vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = "#FFD1DC", bold = true })
+vim.api.nvim_set_hl(0, "Search", { fg = "#ffffff", bg = "#3a3a3a", bold = true })
 
 -- Change search highlight color when the cursor is on the selection
 vim.api.nvim_set_hl(0, "CurSearch", { fg = "#000000", bg = "#FF6F61", bold = true })
