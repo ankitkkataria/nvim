@@ -90,7 +90,7 @@ vim.keymap.set("n", "<leader>wl", "<cmd>set wrap!<CR>")
 
 -- Floating terminals mappings
 -- Vertcal Terminal
-vim.keymap.set({ "n", "t" }, "<C-n>", function()
+vim.keymap.set({ "n", "t", "i" }, "<C-n>", function()
   -- Get the path of the current file
   local current_file_dir = vim.fn.expand "%:p:h"
   -- Check if a valid directory is found
