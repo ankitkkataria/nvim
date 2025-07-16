@@ -27,7 +27,7 @@ return {
         "clangd",
         "jdtls",
         "cpptools",
-        "pylsp"
+        "pylsp",
       },
     },
   },
@@ -195,6 +195,18 @@ return {
     config = function()
       require("tiny-inline-diagnostic").setup()
       vim.diagnostic.config { virtual_text = false } -- Only if needed in your configuration, if you already have native LSP diagnostics
+    end,
+  },
+  {
+    "AckslD/nvim-trevJ.lua",
+    config = function()
+      require("trevj").setup()
+    end,
+    event = "VeryLazy", -- lazy load on VeryLazy
+    init = function()
+      vim.keymap.set("n", "<leader>uj", function()
+        require("trevj").format_at_cursor()
+      end, { desc = "TrevJ format at cursor" })
     end,
   },
 }

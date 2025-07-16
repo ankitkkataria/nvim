@@ -453,7 +453,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<CR>", { desc = "Undo telescope picker" })
+vim.keymap.set("n", "<leader>un", "<cmd>Telescope undo<CR>", { desc = "Undo telescope picker" })
 vim.keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Resume last telescope picker" })
 vim.keymap.set("n", "<leader>sp", "<cmd>Telescope spell_suggest<CR>", { desc = "Spell suggestions" })
 vim.keymap.set("n", "<leader>fD", "<cmd>Telescope diagnostics<CR>", opts)
