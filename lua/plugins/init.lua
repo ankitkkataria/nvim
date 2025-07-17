@@ -198,15 +198,18 @@ return {
     end,
   },
   {
-    "AckslD/nvim-trevJ.lua",
-    config = function()
-      require("trevj").setup()
-    end,
-    event = "VeryLazy", -- lazy load on VeryLazy
-    init = function()
-      vim.keymap.set("n", "<leader>uj", function()
-        require("trevj").format_at_cursor()
-      end, { desc = "TrevJ format at cursor" })
+    "echasnovski/mini.splitjoin",
+    version = false,
+    event = "VeryLazy",
+    opts = {
+      mappings = {
+        toggle = "gs",
+        split = "",
+        join = "",
+      },
+    },
+    config = function(_, opts)
+      require("mini.splitjoin").setup(opts)
     end,
   },
 }
