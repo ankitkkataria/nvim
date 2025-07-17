@@ -26,6 +26,12 @@ return {
         if filepath:find(nvim_config_path, 1, true) == 1 then
           return false
         end
+        -- Don't save if Harpoon's UI is open (or any floating window)
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if vim.api.nvim_win_get_config(win).relative ~= "" then
+            return false
+          end
+        end
 
         return true
       end,
@@ -50,4 +56,3 @@ return {
     },
   },
 }
-
