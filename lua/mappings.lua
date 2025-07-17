@@ -15,7 +15,6 @@ vim.keymap.set("v", "J", "5gj")
 vim.keymap.set("v", "K", "5gk")
 vim.keymap.set("i", "<C-h>", "<C-w>")
 vim.keymap.set("n", "<leader>/", ":noh<cr>")
--- vim.keymap.set("n", "<F9>", ":noh<cr>")
  vim.keymap.set({ "n", "v" }, "mb", "%")
 vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 
