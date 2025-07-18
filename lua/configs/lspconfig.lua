@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 
-local servers = { "html", "cssls", "clangd", "pylsp" }
+local servers = { "html", "cssls", "clangd", "pylsp", "ts_ls" }
 for _, server in ipairs(servers) do
   lspconfig[server].setup({})
 end
