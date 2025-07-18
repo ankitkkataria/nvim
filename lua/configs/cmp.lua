@@ -107,24 +107,24 @@ M.setup = function()
           fallback()
         end
       end, { "i", "s" }),
-    --   ["<C-k>"] = cmp.mapping(function(fallback)
-    --     if cmp.visible() then
-    --       cmp.select_prev_item()
-    --     elseif require("luasnip").jumpable(-1) then
-    --       require("luasnip").jump(-1)
-    --     else
-    --       fallback()
-    --     end
-    --   end, { "i", "s" }),
-    --   ["<C-j>"] = cmp.mapping(function(fallback)
-    --     if cmp.visible() then
-    --       cmp.select_next_item()
-    --     elseif require("luasnip").expand_or_jumpable() then
-    --       require("luasnip").expand_or_jump()
-    --     else
-    --       fallback()
-    --     end
-    --   end, { "i", "s" }),
+      --   ["<C-k>"] = cmp.mapping(function(fallback)
+      --     if cmp.visible() then
+      --       cmp.select_prev_item()
+      --     elseif require("luasnip").jumpable(-1) then
+      --       require("luasnip").jump(-1)
+      --     else
+      --       fallback()
+      --     end
+      --   end, { "i", "s" }),
+      --   ["<C-j>"] = cmp.mapping(function(fallback)
+      --     if cmp.visible() then
+      --       cmp.select_next_item()
+      --     elseif require("luasnip").expand_or_jumpable() then
+      --       require("luasnip").expand_or_jump()
+      --     else
+      --       fallback()
+      --     end
+      --   end, { "i", "s" }),
     },
     sources = {
       { name = "nvim_lsp" },
@@ -161,6 +161,7 @@ M.setup = function()
   --     },
   --   }),
   -- })
+
   -- Set up cmdline mappings without Tab functionality
   local cmdline_mappings = cmp.mapping.preset.cmdline {
     -- Override with explicit Up/Down/Enter mappings
@@ -186,6 +187,15 @@ M.setup = function()
       c = function()
         if cmp.visible() then
           cmp.select_next_item() -- Selects the next item
+        else
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
+        end
+      end,
+    },
+    ["<Right>"] = {
+      c = function()
+        if cmp.visible() then
+          cmp.close() -- Selects the next item
         else
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
         end
